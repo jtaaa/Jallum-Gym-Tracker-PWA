@@ -7,15 +7,21 @@ import Typography from './../Typography/Typography';
 
 import { ClassSet } from './../../utils';
 
-const OptionsList = ({ options, handleClick = () => {} }: OptionsListProps) => {
+const OptionsList = ({ options, handleClick }: OptionsListProps) => {
   const getClickHandler = (value: string) => (e: MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
-    handleClick(value);
+    if (handleClick) handleClick(value);
   };
   return (
     <div className="OptionsList">
       { options.map(option => (
-      <div key={option.value} className={ClassSet`selected: ${option.selected} OptionsList-item`}
+      <div 
+        key={option.value}
+        className={ClassSet`
+          selected: ${option.selected}
+          clickable: ${handleClick !== undefined}
+          OptionsList-item
+        `}
         onClick={getClickHandler(option.value)}
       >
         <Typography dim={!option.selected}>{ option.value }</Typography>

@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
 import './IconButton.scss';
 import { IconButtonProps } from './IconButton.types';
 
 import { ClassSet } from '../../utils';
 
-const Button = ({ icon, outline = 'none', handleClick = () => {} }: IconButtonProps) => {
+const Button = ({ icon, outline = 'none', handleClick }: IconButtonProps) => {
+  const onClick = (e: MouseEvent<HTMLDivElement>) => {
+    if (outline !== 'none') e.stopPropagation();
+    if (handleClick) handleClick(e);
+  }; 
   let iconSVG = null;
   switch(icon) {
     case 'add':
@@ -49,7 +53,7 @@ const Button = ({ icon, outline = 'none', handleClick = () => {} }: IconButtonPr
       break;
   }
   return (
-    <div className={ClassSet`dashed: ${outline === 'dashed'} IconButton`}>
+    <div className={ClassSet`dashed: ${outline === 'dashed'} IconButton`} onClick={onClick}>
       { iconSVG }
     </div>
   );

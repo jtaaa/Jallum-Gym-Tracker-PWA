@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
 import './Logo.scss';
 import { LogoProps } from './Logo.types';
 
-const Logo = ({ size = 'regular', handleClick = () => {} }: LogoProps) => {
+import { ClassSet } from '../../utils';
+
+const Logo = ({ size = 'regular', handleClick }: LogoProps) => {
+  const onClick = (e: MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    if (handleClick) handleClick(e);
+  };
   let LogoSVG = null;
   switch(size) {
     case 'small':
@@ -31,7 +37,7 @@ const Logo = ({ size = 'regular', handleClick = () => {} }: LogoProps) => {
       break;
   }
   return (
-    <div className="Logo" onClick={handleClick}>
+    <div className={ClassSet`link: ${handleClick !== undefined} Logo`} onClick={onClick}>
       { LogoSVG }
     </div>
   );
