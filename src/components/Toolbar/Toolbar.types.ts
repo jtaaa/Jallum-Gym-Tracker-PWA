@@ -1,5 +1,5 @@
-import { ActionType } from '../../redux/action.type';
+import { CallHistoryMethodAction } from 'connected-react-router';
 
 export interface ToolbarProps {
-  navigateTo: (route: string) => ActionType;
+  navigateTo: (route: string) => CallHistoryMethodAction;
 };
