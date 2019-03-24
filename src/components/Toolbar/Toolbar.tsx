@@ -1,8 +1,8 @@
 import React from 'react';
 import './Toolbar.scss';
+import { ToolbarProps } from './Toolbar.types';
 
 import Logo from './../Logo/Logo';
-import { ToolbarProps } from './Toolbar.types';
 
 const Toolbar = ({ navigateTo }: ToolbarProps) => {
   return (
