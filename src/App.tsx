@@ -4,7 +4,9 @@ import './App.scss';
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <div className="theme-dark">
+        <div className="App">
+        </div>
       </div>
     );
   }
