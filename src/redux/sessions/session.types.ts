@@ -6,29 +6,29 @@ export enum SessionActionTypes {
 };
 
 interface StartSessionAction {
-  type: SessionActionTypes.START_SESSION,
+  type: SessionActionTypes.START_SESSION;
   payload: {
-    muscleGroups: Array<string>,
-  },
+    muscleGroups: Array<string>;
+  };
 };
 
 interface EndSessionAction {
-  type: SessionActionTypes.END_SESSION,
+  type: SessionActionTypes.END_SESSION;
 };
 
 interface StartSetAction {
-  type: SessionActionTypes.START_SET,
+  type: SessionActionTypes.START_SET;
   payload: {
-    exercise: string,
-  },
+    exercise: string;
+  };
 };
 
 interface EndSetAction {
-  type: SessionActionTypes.END_SET,
+  type: SessionActionTypes.END_SET;
   payload: {
-    reps: number,
-    weight: number,
-  },
+    reps: number;
+    weight: number;
+  };
 };
 
 export type SessionAction = StartSessionAction
@@ -60,14 +60,14 @@ export interface Set {
 };
 
 export interface Session {
-  timestamp: Date,
-  duration: number,
-  muscleGroups: Array<string>,
-  sets: Array<Set>,
+  timestamp: Date;
+  duration: number;
+  muscleGroups: Array<string>;
+  sets: Array<Set>;
 };
 
 export interface SessionsState {
-  currentSession?: SessionPartial,
-  currentSet?: SetPartial,
-  sessions: Array<Session>,
+  currentSession?: SessionPartial;
+  currentSet?: SetPartial;
+  sessions: Array<Session>;
 };
