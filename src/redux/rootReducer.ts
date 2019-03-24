@@ -6,7 +6,7 @@ import { sessionsReducer } from './sessions/sessions.reducer';
 
 const createRootReducer = (history: History<any>) => combineReducers({
   router: connectRouter(history),
-  sessionsReducer,
+  sessions: sessionsReducer,
 });
 
 export { createRootReducer };
