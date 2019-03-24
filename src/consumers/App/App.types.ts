@@ -3,6 +3,8 @@ import { CallHistoryMethodAction } from 'connected-react-router';
 
 import { SessionAction } from './../../redux/sessions';
 
+import { OptionsListOptions } from '../../components/OptionsList/OptionsList.types';
+
 export interface AppProps {
   location: Location,
   navigateTo: (route: string) => CallHistoryMethodAction,
@@ -10,7 +12,7 @@ export interface AppProps {
 };
 
 export interface AppState {
-  muscleGroups: Array<string>;
+  muscleGroupOptions: OptionsListOptions;
   exercise?: string;
   reps: number;
   weight: number;
