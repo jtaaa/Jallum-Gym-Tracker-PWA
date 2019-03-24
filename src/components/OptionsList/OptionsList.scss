@@ -1,0 +1,22 @@
+@import './../../styles/themes';
+
+.OptionsList {
+  margin-top: 1em;
+}
+
+.OptionsList-item {
+  @include themify($themes) {
+    background-color: themed('backgroundColorAccent');
+  }
+  cursor: pointer;
+  width: 50vw;
+  margin-bottom: 1em;
+  padding: 0.75em 2em;
+  border-radius: 4px;
+}
+
+.OptionsList-item-selected {
+  @include themify($themes) {
+    background-color: themed('primaryAccent');
+  }
+}
