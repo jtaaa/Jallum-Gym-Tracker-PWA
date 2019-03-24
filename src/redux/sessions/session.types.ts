@@ -1,3 +1,5 @@
+import { Action } from "redux";
+
 export enum SessionActionTypes {
   START_SESSION,
   END_SESSION,
@@ -5,25 +7,25 @@ export enum SessionActionTypes {
   END_SET,
 };
 
-interface StartSessionAction {
+interface StartSessionAction extends Action {
   type: SessionActionTypes.START_SESSION;
   payload: {
     muscleGroups: Array<string>;
   };
 };
 
-interface EndSessionAction {
+interface EndSessionAction extends Action {
   type: SessionActionTypes.END_SESSION;
 };
 
-interface StartSetAction {
+interface StartSetAction extends Action {
   type: SessionActionTypes.START_SET;
   payload: {
     exercise: string;
   };
 };
 
-interface EndSetAction {
+interface EndSetAction extends Action {
   type: SessionActionTypes.END_SET;
   payload: {
     reps: number;
