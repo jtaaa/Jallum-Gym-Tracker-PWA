@@ -1,20 +1,20 @@
-import { SessionActionTypes, SessionAction } from './session.types';
+import { SessionsActionTypes, SessionsAction } from './session.types';
 
-export const startSession = (muscleGroups: Array<string>): SessionAction => ({
-  type: SessionActionTypes.START_SESSION,
+export const startSession = (muscleGroups: Array<string>): SessionsAction => ({
+  type: SessionsActionTypes.START_SESSION,
   payload: { muscleGroups },
 });
 
-export const endSession = (): SessionAction => ({
-  type: SessionActionTypes.END_SESSION,
+export const endSession = (): SessionsAction => ({
+  type: SessionsActionTypes.END_SESSION,
 });
 
-export const startSet = (exercise: string): SessionAction => ({
-  type: SessionActionTypes.START_SET,
+export const startSet = (exercise: string): SessionsAction => ({
+  type: SessionsActionTypes.START_SET,
   payload: { exercise },
 });
 
-export const endSet = (reps: number, weight: number): SessionAction => ({
-  type: SessionActionTypes.END_SET,
+export const endSet = (reps: number, weight: number): SessionsAction => ({
+  type: SessionsActionTypes.END_SET,
   payload: { reps, weight },
 });

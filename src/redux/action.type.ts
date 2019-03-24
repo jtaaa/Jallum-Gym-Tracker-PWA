@@ -1,6 +1,6 @@
 import { RouterAction } from 'connected-react-router';
 
-import { SessionAction } from './sessions/session.types';
+import { SessionsAction } from './sessions/session.types';
 
-export type ActionType = SessionAction
+export type ActionType = SessionsAction
                        | RouterAction;

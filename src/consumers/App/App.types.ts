@@ -1,14 +1,13 @@
 import { Location } from 'history';
 import { CallHistoryMethodAction } from 'connected-react-router';
 
-import { SessionAction } from './../../redux/sessions';
-
+import { SessionsAction } from './../../redux/sessions';
 import { OptionsListOptions } from '../../components/OptionsList/OptionsList.types';
 
 export interface AppProps {
   location: Location,
   navigateTo: (route: string) => CallHistoryMethodAction,
-  startSession: (muscleGroups: Array<string>) => SessionAction,
+  startSession: (muscleGroups: Array<string>) => SessionsAction,
 };
 
 export interface AppState {

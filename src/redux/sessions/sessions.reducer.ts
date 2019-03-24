@@ -1,13 +1,13 @@
-import { SessionAction, SessionActionTypes, SessionsState } from './session.types';
+import { SessionsAction, SessionsActionTypes, SessionsState } from './session.types';
 
-export const sessionsReducer = (state: SessionsState = { sessions: [] }, action: SessionAction): SessionsState => {
+export const sessionsReducer = (state: SessionsState = { sessions: [] }, action: SessionsAction): SessionsState => {
   switch(action.type) {
-    case SessionActionTypes.START_SESSION:
+    case SessionsActionTypes.START_SESSION:
       return ({
         ...state,
         currentSession: { timestamp: new Date(), muscleGroups: action.payload.muscleGroups, sets: [] },
       });
-    case SessionActionTypes.END_SESSION:
+    case SessionsActionTypes.END_SESSION:
       if (!state.currentSession) {
         console.warn('Tried to end session with no current session. This is a no-op.');
         return state;
@@ -23,12 +23,12 @@ export const sessionsReducer = (state: SessionsState = { sessions: [] }, action:
           }
         ],
       });
-    case SessionActionTypes.START_SET:
+    case SessionsActionTypes.START_SET:
       return ({
         ...state,
         currentSet: { timestamp: new Date(), exercise: action.payload.exercise },
       });
-    case SessionActionTypes.END_SET:
+    case SessionsActionTypes.END_SET:
       if (!state.currentSession) {
         console.warn('Tried to end set with no current session. This is a no-op.');
         return state;

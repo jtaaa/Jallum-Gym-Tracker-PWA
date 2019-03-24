@@ -1,6 +1,6 @@
 import { Action } from 'redux';
 
-export enum SessionActionTypes {
+export enum SessionsActionTypes {
   START_SESSION,
   END_SESSION,
   START_SET,
@@ -8,35 +8,35 @@ export enum SessionActionTypes {
 };
 
 interface StartSessionAction extends Action {
-  type: SessionActionTypes.START_SESSION;
+  type: SessionsActionTypes.START_SESSION;
   payload: {
     muscleGroups: Array<string>;
   };
 };
 
 interface EndSessionAction extends Action {
-  type: SessionActionTypes.END_SESSION;
+  type: SessionsActionTypes.END_SESSION;
 };
 
 interface StartSetAction extends Action {
-  type: SessionActionTypes.START_SET;
+  type: SessionsActionTypes.START_SET;
   payload: {
     exercise: string;
   };
 };
 
 interface EndSetAction extends Action {
-  type: SessionActionTypes.END_SET;
+  type: SessionsActionTypes.END_SET;
   payload: {
     reps: number;
     weight: number;
   };
 };
 
-export type SessionAction = StartSessionAction
-                          | EndSessionAction
-                          | StartSetAction
-                          | EndSetAction;
+export type SessionsAction = StartSessionAction
+                           | EndSessionAction
+                           | StartSetAction
+                           | EndSetAction;
 
 export interface SetPartial {
   exercise: string,
