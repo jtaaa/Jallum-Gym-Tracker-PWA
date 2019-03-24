@@ -1,0 +1,14 @@
+@import './../../styles/themes.scss';
+
+.Typography {
+  @include themify($themes) {
+    color: themed('textColor');
+  }
+  text-align: center;
+}
+
+.Typography-dim {
+  @include themify($themes) {
+    color: themed('textColorDim');
+  }
+}
