@@ -13,8 +13,8 @@ import IconButton from './../../components/IconButton/IconButton';
 import OptionsList from './../../components/OptionsList/OptionsList';
 
 import { ActionType } from './../../redux/action.type';
-import { startSession } from '../../redux/sessions';
-import { State } from '../../redux/state.types';
+import { startSession } from './../../redux/sessions';
+import { State } from './../../redux/state.types';
 
 class App extends Component<AppProps, AppState> {
   constructor(props: AppProps) {
@@ -99,7 +99,7 @@ class App extends Component<AppProps, AppState> {
 };
 
 const mapStateToProps = (state: State) => ({
-  location: state.router.location
+  location: state.router.location,
 });
 
 const mapDispathToProps = (dispatch: Dispatch<ActionType>) => ({
@@ -109,5 +109,5 @@ const mapDispathToProps = (dispatch: Dispatch<ActionType>) => ({
 
 export default connect(
   mapStateToProps,
-  mapDispathToProps
+  mapDispathToProps,
 )(App);
