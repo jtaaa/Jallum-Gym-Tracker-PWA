@@ -1,10 +1,10 @@
 import { Action } from 'redux';
 
 export enum SessionsActionTypes {
-  START_SESSION,
-  END_SESSION,
-  START_SET,
-  END_SET,
+  START_SESSION = 'START_SESSION',
+  END_SESSION = 'END_SESSION',
+  START_SET = 'START_SET',
+  END_SET = 'END_SET',
 };
 
 interface StartSessionAction extends Action {

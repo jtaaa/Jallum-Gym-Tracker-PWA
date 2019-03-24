@@ -1,7 +1,7 @@
 import { Action } from 'redux';
 
 export enum ExercisesActionTypes {
-  ADD_EXERCISES,
+  ADD_EXERCISES = 'ADD_EXERCISES',
 };
 
 export interface AddExercisesAction extends Action {
