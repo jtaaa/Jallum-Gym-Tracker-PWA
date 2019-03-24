@@ -1,0 +1,14 @@
+@import './../../styles/themes';
+
+.IconButton {
+  width: 48px;
+  height: 48px;
+  margin: 1em auto;
+  border-radius: 50%;
+}
+
+.IconButton-dashed {
+  @include themify($themes) {
+    border: 1px dashed themed(textColorDim)
+  }
+}
