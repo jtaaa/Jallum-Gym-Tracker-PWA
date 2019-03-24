@@ -10,3 +10,13 @@
     background-color: themed('backgroundColor');
   }
 }
+
+.App-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.App-logo-wrapper {
+  margin: 8em 0;
+}
