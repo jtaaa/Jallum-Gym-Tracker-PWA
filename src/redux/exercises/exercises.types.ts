@@ -11,7 +11,7 @@ export interface AddExercisesAction extends Action {
   },
 };
 
-export type ExerciseAction = AddExercisesAction;
+export type ExercisesAction = AddExercisesAction;
 
 export interface Exercise {
   name: string,

@@ -1,6 +1,6 @@
-import { ExercisesState, ExerciseAction, ExercisesActionTypes } from './exercises.types';
+import { ExercisesState, ExercisesAction, ExercisesActionTypes } from './exercises.types';
 
-export const exercisesReducer = (state: ExercisesState = [], action: ExerciseAction): ExercisesState => {
+export const exercisesReducer = (state: ExercisesState = [], action: ExercisesAction): ExercisesState => {
   switch(action.type) {
     case ExercisesActionTypes.ADD_EXERCISES:
       return [ ...state, ...action.payload.exercises ];
