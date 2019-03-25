@@ -7,25 +7,25 @@ export enum SessionsActionTypes {
   END_SET = 'END_SET',
 };
 
-interface StartSessionAction extends Action {
+export interface StartSessionAction extends Action {
   type: SessionsActionTypes.START_SESSION;
   payload: {
     muscleGroups: Array<string>;
   };
 };
 
-interface EndSessionAction extends Action {
+export interface EndSessionAction extends Action {
   type: SessionsActionTypes.END_SESSION;
 };
 
-interface StartSetAction extends Action {
+export interface StartSetAction extends Action {
   type: SessionsActionTypes.START_SET;
   payload: {
     exercise: string;
   };
 };
 
-interface EndSetAction extends Action {
+export interface EndSetAction extends Action {
   type: SessionsActionTypes.END_SET;
   payload: {
     reps: number;
