@@ -1,7 +1,11 @@
 import { Action } from 'redux';
+import { ThunkAction } from 'redux-thunk';
+
+import { State } from './../state.types';
 
 export enum ExercisesActionTypes {
   ADD_EXERCISES = 'ADD_EXERCISES',
+  SET_EXERCISES = 'SET_EXERCISES',
 };
 
 export interface AddExercisesAction extends Action {
@@ -10,6 +14,15 @@ export interface AddExercisesAction extends Action {
     exercises: Array<Exercise>,
   },
 };
+
+export interface SetExercisesAction extends Action {
+  type: ExercisesActionTypes.SET_EXERCISES,
+  payload: {
+    exercises: Array<Exercise>,
+  },
+};
+
+export type RefreshExercisesThunkAction = ThunkAction<Promise<void>, State, undefined, SetExercisesAction>
 
 export type ExercisesAction = AddExercisesAction;
 
