@@ -1,2 +1,2 @@
-export * from './session.actions';
-export * from './session.types';
+export * from './sessions.actions';
+export * from './sessions.types';
