@@ -12,7 +12,7 @@ export interface AppReduxDispatchProps {
 
 export interface AppReduxStateProps {
   location: Location;
-  exercisesOptions: OptionsListOptions;
+  exerciseOptions: OptionsListOptions;
 };
 
 export type AppReduxProps = AppReduxStateProps & AppReduxDispatchProps;

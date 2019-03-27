@@ -78,6 +78,17 @@ class App extends Component<AppProps, AppState> {
           </Switch>
           <div className="App-content">
             <Switch>
+              <Route path="/exercise" render={() => (
+                <div>
+                  <div className="App-heading-wrapper">
+                    <Typography dim={true}>Exercise</Typography>
+                  </div>
+                  <OptionsList options={this.props.exerciseOptions} handleClick={this.handleOptionsListItemClick}/>
+                  <div className="App-button-list">
+                    <IconButton icon="next" />
+                  </div>
+                </div>
+              )} />
               <Route path="/musclegroups" render={() => (
                 <div>
                   <div className="App-heading-wrapper">
@@ -114,7 +125,7 @@ const includesMuscleGroup = (exercise: Exercise, muscleGroups: Array<string> = [
 
 const mapStateToProps = (state: State): AppReduxStateProps => ({
   location: state.router.location,
-  exercisesOptions: state.exercises
+  exerciseOptions: state.exercises
     .filter(exercise => state.sessions.currentSession &&
                         includesMuscleGroup(exercise, state.sessions.currentSession.muscleGroups))
     .map(exercise => ({
