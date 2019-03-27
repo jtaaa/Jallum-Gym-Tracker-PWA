@@ -28,5 +28,6 @@ export interface AppState {
   exercise?: Exercise;
   reps: number;
   weight: number;
+  inSet: boolean;
 };
 

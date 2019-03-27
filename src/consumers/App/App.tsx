@@ -10,6 +10,7 @@ import Logo from './../../components/Logo/Logo';
 import Typography from './../../components/Typography/Typography';
 import IconButton from './../../components/IconButton/IconButton';
 import OptionsList from './../../components/OptionsList/OptionsList';
+import StopWatch from './../../components/StopWatch/StopWatch';
 
 import { ThunkDispatch } from 'redux-thunk';
 
@@ -34,11 +35,14 @@ class App extends Component<AppProps, AppState> {
         { selected: false, value: 'Triceps' },
         { selected: false, value: 'Abs' },
       ],
+      inSet: false,
     };
 
     this.handleBackgroundClick = this.handleBackgroundClick.bind(this);
     this.handleOptionsListItemClick = this.handleOptionsListItemClick.bind(this);
   }
+
+  private setsStopWatchRef = React.createRef<StopWatch>();
 
   componentDidMount() {
     this.props.refreshExercises();
@@ -56,6 +60,19 @@ class App extends Component<AppProps, AppState> {
       case '/exercise':
         return this.props.exerciseOptions[0] && 
           this.handleOptionsListItemClick(this.props.exerciseOptions[0]);
+      case '/sets':
+        if (this.setsStopWatchRef) {
+          const node = this.setsStopWatchRef.current;
+          if (node) {
+            if (!this.state.inSet) {
+              node.start();
+              this.setState({ inSet: true });
+            } else {
+              node.stop();
+              this.setState({ inSet: false });
+            }
+          }
+        }
     }
   }
 
@@ -84,6 +101,19 @@ class App extends Component<AppProps, AppState> {
           </Switch>
           <div className="App-content">
             <Switch>
+              <Route path="/sets" render={() => (
+                <div>
+                  <div className="App-heading-wrapper">
+                    <Typography dim={true}>
+                      { this.state.exercise ? this.state.exercise.name : 'Go pick an exercise!' }
+                    </Typography>
+                  </div>
+                  { !this.state.inSet ?
+                    <IconButton icon="start" />
+                  : <IconButton icon="done" /> }
+                  <StopWatch ref={this.setsStopWatchRef} />
+                </div>
+              )} />
               <Route path="/exercise" render={() => (
                 <div>
                   <div className="App-heading-wrapper">
