@@ -65,6 +65,9 @@ class App extends Component<AppProps, AppState> {
             selected: mgo.value === option.value ? !mgo.selected : mgo.selected,
           })),
         }));
+      case '/exercise':
+        option.extra && this.setState({ exercise: option.extra });
+        return this.props.navigateTo('/sets');
     }
   }
 
@@ -131,6 +134,7 @@ const mapStateToProps = (state: State): AppReduxStateProps => ({
     .map(exercise => ({
       selected: false,
       value: exercise.name,
+      extra: exercise,
     })),
 });
 

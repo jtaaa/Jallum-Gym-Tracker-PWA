@@ -13,7 +13,7 @@ export interface AppReduxDispatchProps {
 
 export interface AppReduxStateProps {
   location: Location;
-  exerciseOptions: Array<OptionsListOption>;
+  exerciseOptions: Array<OptionsListOption<Exercise>>;
 };
 
 export type AppReduxProps = AppReduxStateProps & AppReduxDispatchProps;
@@ -21,18 +21,11 @@ export type AppReduxProps = AppReduxStateProps & AppReduxDispatchProps;
 export interface AppProps extends AppReduxProps {
 };
 
-export interface MuscleGroupsOptionsListOption extends OptionsListOption {}
-
-export interface ExerciseOptionsListOption extends OptionsListOption {
-  exercise: Exercise;
-}
-
-export type AppOptionsListOption = MuscleGroupsOptionsListOption
-                                 | ExerciseOptionsListOption;
+export type AppOptionsListOption = OptionsListOption<Exercise>;
 
 export interface AppState {
   muscleGroupOptions: Array<OptionsListOption>;
-  exercise?: string;
+  exercise?: Exercise;
   reps: number;
   weight: number;
 };
