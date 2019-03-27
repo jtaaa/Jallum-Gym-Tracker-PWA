@@ -2,7 +2,7 @@ import { Location } from 'history';
 import { CallHistoryMethodAction } from 'connected-react-router';
 
 import { StartSessionAction } from './../../redux/sessions';
-import { OptionsListOptions } from './../../components/OptionsList/OptionsList.types';
+import { OptionsListOption } from './../../components/OptionsList/OptionsList.types';
 
 export interface AppReduxDispatchProps {
   navigateTo: (route: string) => CallHistoryMethodAction,
@@ -12,7 +12,7 @@ export interface AppReduxDispatchProps {
 
 export interface AppReduxStateProps {
   location: Location;
-  exerciseOptions: OptionsListOptions;
+  exerciseOptions: Array<OptionsListOption>;
 };
 
 export type AppReduxProps = AppReduxStateProps & AppReduxDispatchProps;
@@ -21,7 +21,7 @@ export interface AppProps extends AppReduxProps {
 };
 
 export interface AppState {
-  muscleGroupOptions: OptionsListOptions;
+  muscleGroupOptions: Array<OptionsListOption>;
   exercise?: string;
   reps: number;
   weight: number;

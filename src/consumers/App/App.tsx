@@ -17,6 +17,7 @@ import { ActionType } from './../../redux/action.type';
 import { startSession } from './../../redux/sessions';
 import { State } from './../../redux/state.types';
 import { Exercise, refreshExercises } from './../../redux/exercises';
+import { OptionsListOption } from '../../components/OptionsList/OptionsList.types';
 
 class App extends Component<AppProps, AppState> {
   constructor(props: AppProps) {
@@ -56,13 +57,13 @@ class App extends Component<AppProps, AppState> {
     }
   }
 
-  handleOptionsListItemClick(value: string) { 
+  handleOptionsListItemClick(option: OptionsListOption) { 
     switch(this.props.location.pathname) {
       case '/musclegroups':
         return this.setState(state => ({
           muscleGroupOptions: state.muscleGroupOptions.map(mgo => ({
             value: mgo.value,
-            selected: mgo.value === value ? !mgo.selected : mgo.selected,
+            selected: mgo.value === option.value ? !mgo.selected : mgo.selected,
           })),
         }));
     }
