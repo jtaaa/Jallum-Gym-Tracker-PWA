@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
 import { push as navigateTo } from 'connected-react-router';
 import './App.scss';
-import { AppProps, AppState } from './App.types';
+import { AppProps, AppState, AppReduxStateProps, AppReduxDispatchProps } from './App.types';
 
 import Toolbar from './../../components/Toolbar/Toolbar';
 import Logo from './../../components/Logo/Logo';
@@ -12,9 +11,12 @@ import Typography from './../../components/Typography/Typography';
 import IconButton from './../../components/IconButton/IconButton';
 import OptionsList from './../../components/OptionsList/OptionsList';
 
+import { ThunkDispatch } from 'redux-thunk';
+
 import { ActionType } from './../../redux/action.type';
 import { startSession } from './../../redux/sessions';
 import { State } from './../../redux/state.types';
+import { Exercise, refreshExercises } from './../../redux/exercises';
 
 class App extends Component<AppProps, AppState> {
   constructor(props: AppProps) {
@@ -36,6 +38,10 @@ class App extends Component<AppProps, AppState> {
 
     this.handleBackgroundClick = this.handleBackgroundClick.bind(this);
     this.handleOptionsListItemClick = this.handleOptionsListItemClick.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.refreshExercises();
   }
   
   handleBackgroundClick() {
@@ -98,13 +104,29 @@ class App extends Component<AppProps, AppState> {
   }
 };
 
-const mapStateToProps = (state: State) => ({
+const includesMuscleGroup = (exercise: Exercise, muscleGroups: Array<string> = []) => {
+  let returnVal = false;
+  muscleGroups.forEach(mg => {
+    if (exercise.primaryMuscleGroups.includes(mg)) return returnVal = true;
+  });
+  return returnVal;
+};
+
+const mapStateToProps = (state: State): AppReduxStateProps => ({
   location: state.router.location,
+  exercisesOptions: state.exercises
+    .filter(exercise => state.sessions.currentSession &&
+                        includesMuscleGroup(exercise, state.sessions.currentSession.muscleGroups))
+    .map(exercise => ({
+      selected: false,
+      value: exercise.name,
+    })),
 });
 
-const mapDispathToProps = (dispatch: Dispatch<ActionType>) => ({
+const mapDispathToProps = (dispatch: ThunkDispatch<State, undefined, ActionType>): AppReduxDispatchProps => ({
   navigateTo: (route: string) => dispatch(navigateTo(route)),
   startSession: (muscleGroups: Array<string>) => dispatch(startSession(muscleGroups)),
+  refreshExercises: () => dispatch(refreshExercises()),
 });
 
 export default connect(
