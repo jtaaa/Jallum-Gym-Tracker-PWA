@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { push as navigateTo } from 'connected-react-router';
 import './App.scss';
-import { AppProps, AppState, AppReduxStateProps, AppReduxDispatchProps } from './App.types';
+import { AppProps, AppState, AppReduxStateProps, AppReduxDispatchProps, AppOptionsListOption } from './App.types';
 
 import Toolbar from './../../components/Toolbar/Toolbar';
 import Logo from './../../components/Logo/Logo';
@@ -17,7 +17,6 @@ import { ActionType } from './../../redux/action.type';
 import { startSession } from './../../redux/sessions';
 import { State } from './../../redux/state.types';
 import { Exercise, refreshExercises } from './../../redux/exercises';
-import { OptionsListOption } from '../../components/OptionsList/OptionsList.types';
 
 class App extends Component<AppProps, AppState> {
   constructor(props: AppProps) {
@@ -57,7 +56,7 @@ class App extends Component<AppProps, AppState> {
     }
   }
 
-  handleOptionsListItemClick(option: OptionsListOption) { 
+  handleOptionsListItemClick(option: AppOptionsListOption) { 
     switch(this.props.location.pathname) {
       case '/musclegroups':
         return this.setState(state => ({
