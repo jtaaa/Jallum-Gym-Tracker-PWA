@@ -4,6 +4,8 @@ export const exercisesReducer = (state: ExercisesState = [], action: ExercisesAc
   switch(action.type) {
     case ExercisesActionTypes.ADD_EXERCISES:
       return [ ...state, ...action.payload.exercises ];
+    case ExercisesActionTypes.SET_EXERCISES:
+      return action.payload.exercises;
     default:
       return state;
   }
