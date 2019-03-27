@@ -53,6 +53,9 @@ class App extends Component<AppProps, AppState> {
         if (!muscleGroups.length) return;
         this.props.startSession(muscleGroups);
         return this.props.navigateTo('/exercise');
+      case '/exercise':
+        return this.props.exerciseOptions[0] && 
+          this.handleOptionsListItemClick(this.props.exerciseOptions[0]);
     }
   }
 
