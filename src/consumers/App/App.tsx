@@ -88,6 +88,8 @@ class App extends Component<AppProps, AppState> {
                   </div>
                   <OptionsList options={this.props.exerciseOptions} handleClick={this.handleOptionsListItemClick}/>
                   <div className="App-button-list">
+                    <IconButton icon="done" outline="dashed" />
+                    <IconButton icon="add" outline="dashed" />
                     <IconButton icon="next" />
                   </div>
                 </div>
