@@ -1,16 +1,16 @@
 import React from 'react';
 import { MouseEvent } from 'react';
 import './OptionsList.scss';
-import { OptionsListProps } from './OptionsList.types';
+import { OptionsListProps, OptionsListOption } from './OptionsList.types';
 
 import Typography from './../Typography/Typography';
 
 import { ClassSet } from './../../utils';
 
 const OptionsList = ({ options, handleClick }: OptionsListProps) => {
-  const getClickHandler = (value: string) => (e: MouseEvent<HTMLDivElement>) => {
+  const getClickHandler = (option: OptionsListOption) => (e: MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
-    if (handleClick) handleClick(value);
+    if (handleClick) handleClick(option);
   };
   return (
     <div className="OptionsList">
@@ -22,7 +22,7 @@ const OptionsList = ({ options, handleClick }: OptionsListProps) => {
           clickable: ${handleClick !== undefined}
           OptionsList-item
         `}
-        onClick={getClickHandler(option.value)}
+        onClick={getClickHandler(option)}
       >
         <Typography dim={!option.selected}>{ option.value }</Typography>
       </div>

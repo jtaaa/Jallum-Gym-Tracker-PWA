@@ -1,6 +1,9 @@
-export type OptionsListOptions = Array<{ selected: boolean, value: string}>;
+export interface OptionsListOption {
+  selected: boolean;
+  value: string;
+}
 
 export interface OptionsListProps {
-  handleClick?: (value: string) => void;
-  options: OptionsListOptions,
+  handleClick?: (option: OptionsListOption) => void;
+  options: Array<OptionsListOption>,
 };
