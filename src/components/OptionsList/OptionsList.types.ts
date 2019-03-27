@@ -1,6 +1,7 @@
-export interface OptionsListOption {
+export interface OptionsListOption<T = any> {
   selected: boolean;
   value: string;
+  extra?: T;
 }
 
 export interface OptionsListProps {
