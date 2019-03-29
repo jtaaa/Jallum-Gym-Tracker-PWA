@@ -226,11 +226,11 @@ class App extends Component<AppProps, AppState> {
                   <Typography dim={true}>Start Gym Session</Typography>
                   <IconButton icon="add" />
                   <Platform>
-                    <Link to="/api/auth/google" className="Toolbar-login">
+                    <a href="/api/auth/google" className="Toolbar-login">
                       <div className="App-login">
                         <Typography dim>Login</Typography>
                       </div>
-                    </Link>
+                    </a>
                   </Platform>
                 </div>
               )} />
