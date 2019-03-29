@@ -27,6 +27,7 @@ export type RefreshExercisesThunkAction = ThunkAction<Promise<void>, State, unde
 export type ExercisesAction = AddExercisesAction | SetExercisesAction;
 
 export interface Exercise {
+  _id: string,
   name: string,
   primaryMuscleGroups: Array<string>,
   secondaryMuscleGroups: Array<string>,
