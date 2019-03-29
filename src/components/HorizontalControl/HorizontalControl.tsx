@@ -6,7 +6,7 @@ import IconButton from './../IconButton/IconButton';
 
 const Control = ({ icon, handleClick }: ControlProps) => {
   return (
-    <IconButton icon={icon} handleClick={handleClick} margin={false} stopPropagation />
+    <IconButton icon={icon} handleClick={handleClick} margin={false} outline="dashed" />
   );
 };
 
