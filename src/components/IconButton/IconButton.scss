@@ -4,7 +4,6 @@
   cursor: pointer;
   width: 48px;
   height: 48px;
-  margin: 1em auto;
   border-radius: 50%;
 }
 
@@ -12,4 +11,8 @@
   @include themify($themes) {
     border: 1px dashed themed(textColorDim)
   }
+}
+
+.IconButton-margin {
+  margin: 1em auto;
 }

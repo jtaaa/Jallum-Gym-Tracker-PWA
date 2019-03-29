@@ -4,7 +4,7 @@ import { IconButtonProps } from './IconButton.types';
 
 import { ClassSet } from '../../utils';
 
-const Button = ({ icon, outline = 'none', handleClick }: IconButtonProps) => {
+const Button = ({ icon, outline = 'none', margin = true, handleClick }: IconButtonProps) => {
   const onClick = (e: MouseEvent<HTMLDivElement>) => {
     if (outline !== 'none') e.stopPropagation();
     if (handleClick) handleClick(e);
@@ -53,7 +53,14 @@ const Button = ({ icon, outline = 'none', handleClick }: IconButtonProps) => {
       break;
   }
   return (
-    <div className={ClassSet`dashed: ${outline === 'dashed'} IconButton`} onClick={onClick}>
+    <div
+      className={ClassSet`
+        dashed: ${outline === 'dashed'}
+        margin: ${margin}
+        IconButton
+      `}
+      onClick={onClick}
+    >
       { iconSVG }
     </div>
   );
