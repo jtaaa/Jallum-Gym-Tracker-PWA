@@ -17,7 +17,7 @@ import TextList from './../../components/TextList/TextList';
 import { ThunkDispatch } from 'redux-thunk';
 
 import { ActionType } from './../../redux/action.type';
-import { startSession, startSet, endSet, endSession } from './../../redux/sessions';
+import { startSession, startSet, endSet, endAndSaveSession } from './../../redux/sessions';
 import { State } from './../../redux/state.types';
 import { Exercise, refreshExercises } from './../../redux/exercises';
 
@@ -257,7 +257,7 @@ const mapStateToProps = (state: State): AppReduxStateProps => ({
 const mapDispathToProps = (dispatch: ThunkDispatch<State, undefined, ActionType>): AppReduxDispatchProps => ({
   navigateTo: (route: string) => dispatch(navigateTo(route)),
   startSession: (muscleGroups: Array<string>) => dispatch(startSession(muscleGroups)),
-  endSession: () => dispatch(endSession()),
+  endSession: () => dispatch(endAndSaveSession()),
   startSet: (exercise: string) => dispatch(startSet(exercise)),
   endSet: (reps: number, weight: number) => dispatch(endSet(reps, weight)),
   refreshExercises: () => dispatch(refreshExercises()),

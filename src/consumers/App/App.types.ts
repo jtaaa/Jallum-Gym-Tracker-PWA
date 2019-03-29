@@ -1,14 +1,14 @@
 import { Location } from 'history';
 import { CallHistoryMethodAction } from 'connected-react-router';
 
-import { StartSessionAction, StartSetAction, EndSetAction, EndSessionAction } from './../../redux/sessions';
+import { StartSessionAction, StartSetAction, EndSetAction } from './../../redux/sessions';
 import { OptionsListOption } from './../../components/OptionsList/OptionsList.types';
 import { Exercise } from '../../redux/exercises';
 
 export interface AppReduxDispatchProps {
   navigateTo: (route: string) => CallHistoryMethodAction,
   startSession: (muscleGroups: Array<string>) => StartSessionAction,
-  endSession: () => EndSessionAction,
+  endSession: () => Promise<void>,
   startSet: (exercise: string) => StartSetAction,
   endSet: (reps: number, weight: number) => EndSetAction,
   refreshExercises: () => Promise<void>,
