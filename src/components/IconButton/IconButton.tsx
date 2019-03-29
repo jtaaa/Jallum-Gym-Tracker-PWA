@@ -4,9 +4,9 @@ import { IconButtonProps } from './IconButton.types';
 
 import { ClassSet } from '../../utils';
 
-const Button = ({ icon, outline = 'none', margin = true, handleClick }: IconButtonProps) => {
+const Button = ({ icon, outline = 'none', margin = true, stopPropagation = false, handleClick }: IconButtonProps) => {
   const onClick = (e: MouseEvent<HTMLDivElement>) => {
-    if (outline !== 'none') e.stopPropagation();
+    if (outline !== 'none' || stopPropagation) e.stopPropagation();
     if (handleClick) handleClick(e);
   }; 
   let iconSVG = null;

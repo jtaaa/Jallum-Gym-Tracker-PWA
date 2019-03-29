@@ -5,4 +5,5 @@ export interface IconButtonProps {
   icon: 'add' | 'minus' | 'next' | 'start' | 'done';
   outline?: 'none' | 'dashed';
   margin?: boolean;
+  stopPropagation?: boolean;
 };
