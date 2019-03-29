@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { push as navigateTo } from 'connected-react-router';
 import './App.scss';
@@ -13,6 +13,7 @@ import OptionsList from './../../components/OptionsList/OptionsList';
 import StopWatch from './../../components/StopWatch/StopWatch';
 import HorizontalControl from './../../components/HorizontalControl/HorizontalControl';
 import TextList from './../../components/TextList/TextList';
+import Platform from './../../components/Platform/Platform';
 
 import { ThunkDispatch } from 'redux-thunk';
 
@@ -224,6 +225,13 @@ class App extends Component<AppProps, AppState> {
                   </div>
                   <Typography dim={true}>Start Gym Session</Typography>
                   <IconButton icon="add" />
+                  <Platform>
+                    <Link to="/api/auth/google" className="Toolbar-login">
+                      <div className="App-login">
+                        <Typography dim>Login</Typography>
+                      </div>
+                    </Link>
+                  </Platform>
                 </div>
               )} />
             </Switch>

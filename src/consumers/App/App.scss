@@ -51,3 +51,12 @@
 .App-sets-list {
   margin-top: 1em;
 }
+
+.App-login {
+  @include themify($themes) {
+    border: 1px dashed themed('textColorDim')
+  }
+  padding: 1em;
+  margin-top: 2.5em;
+  border-radius: 24px;
+}
