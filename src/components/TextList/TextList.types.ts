@@ -1,4 +1,5 @@
 export interface TextListProps {
-  renderPrefix?: (index: number) => string;
+  limit?: number;
   children: Array<string>;
+  renderPrefix?: (index: number) => string;
 }
