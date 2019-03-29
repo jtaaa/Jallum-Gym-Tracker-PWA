@@ -12,11 +12,12 @@ import IconButton from './../../components/IconButton/IconButton';
 import OptionsList from './../../components/OptionsList/OptionsList';
 import StopWatch from './../../components/StopWatch/StopWatch';
 import HorizontalControl from './../../components/HorizontalControl/HorizontalControl';
+import TextList from './../../components/TextList/TextList';
 
 import { ThunkDispatch } from 'redux-thunk';
 
 import { ActionType } from './../../redux/action.type';
-import { startSession } from './../../redux/sessions';
+import { startSession, startSet, endSet, endSession } from './../../redux/sessions';
 import { State } from './../../redux/state.types';
 import { Exercise, refreshExercises } from './../../redux/exercises';
 
@@ -39,6 +40,7 @@ class App extends Component<AppProps, AppState> {
       inSet: false,
       weightUnit: 5,
       repsUnit: 1,
+      setSummaries: [],
     };
 
     this.handleBackgroundClick = this.handleBackgroundClick.bind(this);
@@ -47,6 +49,8 @@ class App extends Component<AppProps, AppState> {
     this.decreaseReps = this.decreaseReps.bind(this);
     this.increaseWeight = this.increaseWeight.bind(this);
     this.decreaseWeight = this.decreaseWeight.bind(this);
+    this.nextExercise = this.nextExercise.bind(this);
+    this.completeSession = this.completeSession.bind(this);
   }
 
   private setsStopWatchRef = React.createRef<StopWatch>();
@@ -73,10 +77,18 @@ class App extends Component<AppProps, AppState> {
           if (node) {
             if (!this.state.inSet) {
               node.start();
+              if (this.state.exercise)
+                this.props.startSet(this.state.exercise._id);
               this.setState({ inSet: true });
             } else {
               node.stop();
-              this.setState({ inSet: false });
+              this.props.endSet(this.state.reps, this.state.weight);
+              this.setState(state => ({
+                inSet: false,
+                setSummaries: [ ...state.setSummaries,
+                  `${this.state.reps} reps at ${this.state.weight}lbs`
+                ],
+              }));
             }
           }
         }
@@ -110,6 +122,22 @@ class App extends Component<AppProps, AppState> {
   }
   decreaseWeight() {
     this.setState(state => ({ weight: state.weight - this.state.weightUnit }));
+  }
+
+  renderSetPrefix(index: number) {
+    return `Set ${index + 1}: `;
+  }
+
+  nextExercise() {
+    if (!this.state.inSet) {
+      this.setState({ setSummaries: [], inSet: false, exercise: undefined }, () =>
+        this.props.navigateTo('/exercise'));
+    }
+  }
+
+  completeSession() {
+    this.props.endSession();
+    this.props.navigateTo('/');
   }
 
   render() {
@@ -157,6 +185,14 @@ class App extends Component<AppProps, AppState> {
                       </HorizontalControl>
                     </div>
                   </div>
+                  <div className="App-sets-list">
+                    <TextList renderPrefix={this.renderSetPrefix} limit={5}>
+                      { this.state.setSummaries }
+                    </TextList>
+                  </div>
+                  { !this.state.inSet &&
+                  <IconButton icon="done" outline="dashed" handleClick={this.nextExercise} />
+                  }
                 </div>
               )} />
               <Route path="/exercise" render={() => (
@@ -166,7 +202,7 @@ class App extends Component<AppProps, AppState> {
                   </div>
                   <OptionsList options={this.props.exerciseOptions} handleClick={this.handleOptionsListItemClick}/>
                   <div className="App-button-list">
-                    <IconButton icon="done" outline="dashed" />
+                    <IconButton icon="done" outline="dashed" handleClick={this.completeSession} />
                     <IconButton icon="add" outline="dashed" />
                     <IconButton icon="next" />
                   </div>
@@ -221,6 +257,9 @@ const mapStateToProps = (state: State): AppReduxStateProps => ({
 const mapDispathToProps = (dispatch: ThunkDispatch<State, undefined, ActionType>): AppReduxDispatchProps => ({
   navigateTo: (route: string) => dispatch(navigateTo(route)),
   startSession: (muscleGroups: Array<string>) => dispatch(startSession(muscleGroups)),
+  endSession: () => dispatch(endSession()),
+  startSet: (exercise: string) => dispatch(startSet(exercise)),
+  endSet: (reps: number, weight: number) => dispatch(endSet(reps, weight)),
   refreshExercises: () => dispatch(refreshExercises()),
 });
 
