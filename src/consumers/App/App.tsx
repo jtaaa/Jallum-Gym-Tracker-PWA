@@ -11,6 +11,7 @@ import Typography from './../../components/Typography/Typography';
 import IconButton from './../../components/IconButton/IconButton';
 import OptionsList from './../../components/OptionsList/OptionsList';
 import StopWatch from './../../components/StopWatch/StopWatch';
+import HorizontalControl from './../../components/HorizontalControl/HorizontalControl';
 
 import { ThunkDispatch } from 'redux-thunk';
 
@@ -36,10 +37,16 @@ class App extends Component<AppProps, AppState> {
         { selected: false, value: 'Abs' },
       ],
       inSet: false,
+      weightUnit: 5,
+      repsUnit: 1,
     };
 
     this.handleBackgroundClick = this.handleBackgroundClick.bind(this);
     this.handleOptionsListItemClick = this.handleOptionsListItemClick.bind(this);
+    this.increaseReps = this.increaseReps.bind(this);
+    this.decreaseReps = this.decreaseReps.bind(this);
+    this.increaseWeight = this.increaseWeight.bind(this);
+    this.decreaseWeight = this.decreaseWeight.bind(this);
   }
 
   private setsStopWatchRef = React.createRef<StopWatch>();
@@ -91,6 +98,20 @@ class App extends Component<AppProps, AppState> {
     }
   }
 
+  increaseReps() {
+    this.setState(state => ({ reps: state.reps + this.state.repsUnit }));
+  }
+  decreaseReps() {
+    this.setState(state => ({ reps: state.reps - this.state.repsUnit }));
+  }
+
+  increaseWeight() {
+    this.setState(state => ({ weight: state.weight + this.state.weightUnit }));
+  }
+  decreaseWeight() {
+    this.setState(state => ({ weight: state.weight - this.state.weightUnit }));
+  }
+
   render() {
     return (
       <div className="theme-dark">
@@ -103,7 +124,7 @@ class App extends Component<AppProps, AppState> {
             <Switch>
               <Route path="/sets" render={() => (
                 <div>
-                  <div className="App-heading-wrapper">
+                  <div className="App-heading">
                     <Typography dim={true}>
                       { this.state.exercise ? this.state.exercise.name : 'Go pick an exercise!' }
                     </Typography>
@@ -111,7 +132,31 @@ class App extends Component<AppProps, AppState> {
                   { !this.state.inSet ?
                     <IconButton icon="start" />
                   : <IconButton icon="done" /> }
-                  <StopWatch ref={this.setsStopWatchRef} />
+                  <div className="App-sets-stopwatch">
+                    <StopWatch ref={this.setsStopWatchRef} clearOnStop />
+                  </div>
+                  <div className="App-number-input">
+                    <Typography dim small>reps</Typography>
+                    <div className="App-number-input-control">
+                      <HorizontalControl
+                        start={{ icon: 'minus', handleClick: this.decreaseReps }}
+                        end={{ icon: 'add', handleClick: this.increaseReps }}
+                      >
+                        { this.state.reps }
+                      </HorizontalControl>
+                    </div>
+                  </div>
+                  <div className="App-number-input">
+                    <Typography dim small>weight</Typography>
+                    <div className="App-number-input-control">
+                      <HorizontalControl
+                        start={{ icon: 'minus', handleClick: this.decreaseWeight }}
+                        end={{ icon: 'add', handleClick: this.increaseWeight }}
+                      >
+                        { this.state.weight }
+                      </HorizontalControl>
+                    </div>
+                  </div>
                 </div>
               )} />
               <Route path="/exercise" render={() => (

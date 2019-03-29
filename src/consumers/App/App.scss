@@ -7,6 +7,7 @@
   bottom: 0;
   left: 0;
   @include themify($themes) {
+    color: themed('textColor');
     background-color: themed('backgroundColor');
   }
 }
@@ -21,11 +22,28 @@
   margin: 8em 0;
 }
 
-.App-heading-wrapper {
+.App-heading {
   margin: 2.5em 0;
 }
 
 .App-button-list {
   display: flex;
   justify-content: space-around;
+}
+
+.App-sets-stopwatch {
+  margin-top: 2.5em;
+}
+
+.App-number-input {
+  text-align: center;
+  width: 60vw;
+  margin-top: 1.5em;
+}
+
+.App-number-input-control {
+  @include themify($themes) {
+    background-color: themed('backgroundColorAccent');
+  }
+  margin-top: 0.25em;
 }

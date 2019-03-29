@@ -27,7 +27,9 @@ export interface AppState {
   muscleGroupOptions: Array<OptionsListOption>;
   exercise?: Exercise;
   reps: number;
+  repsUnit: number;
   weight: number;
+  weightUnit: number;
   inSet: boolean;
 };
 
