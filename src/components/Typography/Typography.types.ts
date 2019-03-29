@@ -1,6 +1,6 @@
-import { ReactChild } from 'react';
+import { PropsWithChildren } from 'react';
 
-export interface TypographyProps {
+export type TypographyProps = PropsWithChildren<{
   dim?: boolean;
-  children: ReactChild;
-};
+  small?: boolean;
+}>;

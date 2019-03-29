@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import './Typography.scss';
 import { TypographyProps } from './Typography.types';
 
 import { ClassSet } from './../../utils';
 
-const Typography = ({ dim = false, children }: TypographyProps) => {
+const Typography: FunctionComponent<TypographyProps> = ({ dim = false, small = false, children }) => {
   return (
-    <div className={ClassSet`dim: ${dim} Typography`}>
+    <div className={ClassSet`
+      dim: ${dim}
+      small: ${small}
+      Typography`
+    }>
       { children }
     </div>
   );
