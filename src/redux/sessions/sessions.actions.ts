@@ -19,7 +19,7 @@ export const endAndSaveSession = (): EndAndSaveSessionsThunkAction =>
       const resp = await fetch('/api/sessions', {
         method: 'POST',
         headers: defaultFetchHeaders,
-        body: JSON.stringify(sessions[sessions.length - 1]),
+        body: JSON.stringify({ session: sessions[sessions.length - 1] }),
       });
       if (!resp.ok) return console.log('Huh, I couldn\'t save your session. Weird.');
     }
