@@ -22,7 +22,7 @@ export interface SetExercisesAction extends Action {
   },
 };
 
-export type RefreshExercisesThunkAction = ThunkAction<Promise<void>, State, undefined, SetExercisesAction>
+export type RefreshExercisesThunkAction = ThunkAction<Promise<void>, State, undefined, SetExercisesAction>;
 
 export type ExercisesAction = AddExercisesAction | SetExercisesAction;
 
