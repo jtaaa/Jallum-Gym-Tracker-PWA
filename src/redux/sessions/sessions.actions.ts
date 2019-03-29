@@ -1,4 +1,6 @@
-import { SessionsActionTypes, StartSessionAction, StartSetAction, EndSessionAction, EndSetAction } from './sessions.types';
+import { SessionsActionTypes, StartSessionAction, StartSetAction, EndSessionAction, EndSetAction, EndAndSaveSessionsThunkAction } from './sessions.types';
+
+import { defaultFetchHeaders } from './../../utils';
 
 export const startSession = (muscleGroups: Array<string>): StartSessionAction => ({
   type: SessionsActionTypes.START_SESSION,
@@ -8,6 +10,21 @@ export const startSession = (muscleGroups: Array<string>): StartSessionAction =>
 export const endSession = (): EndSessionAction => ({
   type: SessionsActionTypes.END_SESSION,
 });
+
+export const endAndSaveSession = (): EndAndSaveSessionsThunkAction =>
+  async (dispatch, getState) => {
+    dispatch(endSession());
+    const { sessions } = getState().sessions;
+    if (sessions.length) {
+      const resp = await fetch('/api/sessions', {
+        method: 'POST',
+        headers: defaultFetchHeaders,
+        body: JSON.stringify(sessions[sessions.length - 1]),
+      });
+      if (!resp.ok) return console.log('Huh, I couldn\'t save your session. Weird.');
+    }
+  }
+;
 
 export const startSet = (exercise: string): StartSetAction => ({
   type: SessionsActionTypes.START_SET,

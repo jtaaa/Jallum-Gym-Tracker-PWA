@@ -1,4 +1,7 @@
 import { Action } from 'redux';
+import { ThunkAction } from 'redux-thunk';
+
+import { State } from '../state.types';
 
 export enum SessionsActionTypes {
   START_SESSION = 'START_SESSION',
@@ -17,6 +20,8 @@ export interface StartSessionAction extends Action {
 export interface EndSessionAction extends Action {
   type: SessionsActionTypes.END_SESSION;
 };
+
+export type EndAndSaveSessionsThunkAction = ThunkAction<Promise<void>, State, undefined, EndSessionAction>;
 
 export interface StartSetAction extends Action {
   type: SessionsActionTypes.START_SET;
