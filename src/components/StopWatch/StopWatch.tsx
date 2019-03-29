@@ -16,10 +16,18 @@ class StopWatch extends Component<StopWatchProps, StopWatchState> {
     this.getMinutes = this.getMinutes.bind(this);
     this.getSeconds = this.getSeconds.bind(this);
   }
+
+  private refreshIntervalId: any;
+  private clearIntervalId: any;
   
 
   componentDidMount() {
     if (this.props.startOnMount) this.start();
+  }
+
+  componentWillUnmount() {
+    if (this.refreshIntervalId) clearInterval(this.refreshIntervalId);
+    if (this.clearIntervalId) clearInterval(this.clearIntervalId);
   }
 
   public update() {
@@ -30,16 +38,15 @@ class StopWatch extends Component<StopWatchProps, StopWatchState> {
   }
 
   public start() {
-    const intervalId = setInterval(this.update, 500);
+    this.refreshIntervalId = setInterval(this.update, 500);
     this.setState({
       startTime: Date.now(),
       elapsed: 0,
-      intervalId,
     });
   }
 
   public stop() {
-    clearInterval(this.state.intervalId);
+    clearInterval(this.refreshIntervalId);
     this.setState({ endTime: Date.now() });
     if (this.props.clearOnStop) {
       setTimeout(() => this.setState({ elapsed: 0 }), this.props.clearTimout || 3000);
