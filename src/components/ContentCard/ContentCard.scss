@@ -1,0 +1,24 @@
+@import './../../styles/themes';
+
+.ContentCard {
+  @include themify($themes) {
+    color: themed('textColorDim');
+    background-color: themed('cardBackgroundColor');
+  }
+  height: 12em;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  border-radius: 4px;
+}
+
+.ContentCard-display {
+  flex-grow: 1;
+}
+
+.ContentCard-caption {
+  font-size: $smallfont;
+  text-align: center;
+}
+
+
