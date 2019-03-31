@@ -2,6 +2,11 @@ import { SessionsAction, SessionsActionTypes, SessionsState } from './sessions.t
 
 export const sessionsReducer = (state: SessionsState = { sessions: [] }, action: SessionsAction): SessionsState => {
   switch(action.type) {
+    case SessionsActionTypes.SET_SESSIONS:
+      return ({
+        ...state,
+        sessions: action.payload.sessions,
+      });
     case SessionsActionTypes.START_SESSION:
       return ({
         ...state,

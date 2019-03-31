@@ -1,13 +1,14 @@
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 
-import { State } from '../state.types';
+import { State } from './../state.types';
 
 export enum SessionsActionTypes {
   START_SESSION = 'START_SESSION',
   END_SESSION = 'END_SESSION',
   START_SET = 'START_SET',
   END_SET = 'END_SET',
+  SET_SESSIONS = 'SET_SESSIONS',
 };
 
 export interface StartSessionAction extends Action {
@@ -20,6 +21,15 @@ export interface StartSessionAction extends Action {
 export interface EndSessionAction extends Action {
   type: SessionsActionTypes.END_SESSION;
 };
+
+export interface SetSessionAction extends Action {
+  type: SessionsActionTypes.SET_SESSIONS;
+  payload: {
+    sessions: Array<Session>;
+  };
+};
+
+export type RefreshSessionsThunkAction = ThunkAction<Promise<void>, State, undefined, SetSessionAction>;
 
 export type EndAndSaveSessionsThunkAction = ThunkAction<Promise<void>, State, undefined, EndSessionAction>;
 
@@ -41,7 +51,8 @@ export interface EndSetAction extends Action {
 export type SessionsAction = StartSessionAction
                            | EndSessionAction
                            | StartSetAction
-                           | EndSetAction;
+                           | EndSetAction
+                           | SetSessionAction;
 
 export interface SetPartial {
   exercise: string,
