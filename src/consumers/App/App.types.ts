@@ -12,6 +12,7 @@ export interface AppReduxDispatchProps {
   startSet: (exercise: string) => StartSetAction,
   endSet: (reps: number, weight: number) => EndSetAction,
   refreshExercises: () => Promise<void>,
+  refreshSessions: () => Promise<void>,
 };
 
 export interface AppReduxStateProps {

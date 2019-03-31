@@ -18,7 +18,7 @@ import Platform from './../../components/Platform/Platform';
 import { ThunkDispatch } from 'redux-thunk';
 
 import { ActionType } from './../../redux/action.type';
-import { startSession, startSet, endSet, endAndSaveSession } from './../../redux/sessions';
+import { startSession, startSet, endSet, endAndSaveSession, refreshSessions } from './../../redux/sessions';
 import { State } from './../../redux/state.types';
 import { Exercise, refreshExercises } from './../../redux/exercises';
 
@@ -58,6 +58,7 @@ class App extends Component<AppProps, AppState> {
 
   componentDidMount() {
     this.props.refreshExercises();
+    this.props.refreshSessions();
   }
   
   handleBackgroundClick() {
@@ -269,6 +270,7 @@ const mapDispathToProps = (dispatch: ThunkDispatch<State, undefined, ActionType>
   startSet: (exercise: string) => dispatch(startSet(exercise)),
   endSet: (reps: number, weight: number) => dispatch(endSet(reps, weight)),
   refreshExercises: () => dispatch(refreshExercises()),
+  refreshSessions: () => dispatch(refreshSessions()),
 });
 
 export default connect(
