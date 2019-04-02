@@ -1,5 +1,5 @@
-import { ReactNode } from 'react';
+import { ReactChild } from 'react';
 
 export interface ContentCardProps {
-  children: [ ReactNode, ReactNode ];
+  children: [ ReactChild, ReactChild ];
 };
