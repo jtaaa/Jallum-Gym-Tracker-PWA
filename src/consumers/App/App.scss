@@ -11,3 +11,13 @@
     background-color: themed('backgroundColor');
   }
 }
+
+.App-login {
+  @include themify($themes) {
+    border: 1px dashed themed('textColorDim')
+  }
+  width: 8em;
+  padding: 1em;
+  margin: 2.5em auto 0 auto;
+  border-radius: 24px;
+}

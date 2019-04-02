@@ -1,10 +1,13 @@
 import { CallHistoryMethodAction } from 'connected-react-router';
 
 export interface AppReduxDispatchProps {
-  navigateTo: (route: string) => CallHistoryMethodAction,
+  navigateTo: (route: string) => CallHistoryMethodAction;
+  refreshProfile: () => Promise<void>;
 };
 
-export interface AppReduxStateProps {};
+export interface AppReduxStateProps {
+  isLoggedIn: boolean,
+};
 
 export type AppReduxProps = AppReduxStateProps & AppReduxDispatchProps;
 

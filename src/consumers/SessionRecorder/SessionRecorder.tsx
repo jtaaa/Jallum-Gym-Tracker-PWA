@@ -5,7 +5,6 @@ import { push as navigateTo } from 'connected-react-router';
 import './SessionRecorder.scss';
 import { SessionRecorderProps, SessionRecorderState, SessionRecorderReduxStateProps, SessionRecorderReduxDispatchProps, SessionRecorderOptionsListOption } from './SessionRecorder.types';
 
-import Toolbar from './../../components/Toolbar/Toolbar';
 import Logo from './../../components/Logo/Logo';
 import Typography from './../../components/Typography/Typography';
 import IconButton from './../../components/IconButton/IconButton';
@@ -13,7 +12,6 @@ import OptionsList from './../../components/OptionsList/OptionsList';
 import StopWatch from './../../components/StopWatch/StopWatch';
 import HorizontalControl from './../../components/HorizontalControl/HorizontalControl';
 import TextList from './../../components/TextList/TextList';
-import Platform from './../../components/Platform/Platform';
 
 import { ThunkDispatch } from 'redux-thunk';
 
@@ -221,13 +219,6 @@ class SessionRecorder extends Component<SessionRecorderProps, SessionRecorderSta
                 </div>
                 <Typography dim={true}>Start Gym Session</Typography>
                 <IconButton icon="add" />
-                <Platform>
-                  <a href="/api/auth/google" className="Toolbar-login">
-                    <div className="SessionRecorder-login">
-                      <Typography dim>Login</Typography>
-                    </div>
-                  </a>
-                </Platform>
               </div>
             )} />
           </Switch>
