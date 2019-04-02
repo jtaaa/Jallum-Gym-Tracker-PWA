@@ -6,6 +6,7 @@ import './App.scss';
 import { AppProps, AppState, AppReduxDispatchProps, AppReduxStateProps } from './App.types';
 
 import SessionRecorder from './../SessionRecorder/SessionRecorder';
+import SessionTracker from './../SessionTracker/SessionTracker';
 import Typography from '../../components/Typography/Typography';
 import Toolbar from './../../components/Toolbar/Toolbar';
 import Platform from './../../components/Platform/Platform';
@@ -39,6 +40,7 @@ class App extends Component<AppProps, AppState> {
             </a>
           </Platform>
           }
+          <SessionTracker />
         </div>
       </div>
     );
