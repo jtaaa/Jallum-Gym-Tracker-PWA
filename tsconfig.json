@@ -22,5 +22,7 @@
   "include": [
     "src"
   ],
-  "exclude": [ "src/setupProxy.js" ]
+  "exclude": [
+    "src/setupProxy.js"
+  ]
 }
