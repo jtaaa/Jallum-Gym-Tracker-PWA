@@ -5,7 +5,10 @@ export const sessionsReducer = (state: SessionsState = { sessions: [] }, action:
     case SessionsActionTypes.SET_SESSIONS:
       return ({
         ...state,
-        sessions: action.payload.sessions,
+        sessions: action.payload.sessions.map(session => ({
+          ...session,
+          timestamp: new Date(session.timestamp),
+        })),
       });
     case SessionsActionTypes.START_SESSION:
       return ({
