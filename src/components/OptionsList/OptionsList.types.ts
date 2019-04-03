@@ -1,6 +1,7 @@
 export interface OptionsListOption<T = any> {
   selected: boolean;
   value: string;
+  highlighted?: boolean;
   extra?: T;
 }
 

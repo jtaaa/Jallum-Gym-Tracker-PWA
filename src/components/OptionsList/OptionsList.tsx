@@ -19,12 +19,13 @@ const OptionsList = ({ options, handleClick }: OptionsListProps) => {
         key={option.value}
         className={ClassSet`
           selected: ${option.selected}
+          highlighted: ${option.highlighted || false}
           clickable: ${handleClick !== undefined}
           OptionsList-item
         `}
         onClick={getClickHandler(option)}
       >
-        <Typography dim={!option.selected}>{ option.value }</Typography>
+        <Typography dim={!option.selected && !option.highlighted}>{ option.value }</Typography>
       </div>
       ))}
     </div>

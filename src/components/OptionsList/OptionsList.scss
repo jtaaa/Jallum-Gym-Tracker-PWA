@@ -20,6 +20,12 @@
   }
 }
 
+.OptionsList-item-highlighted {
+  @include themify($themes) {
+    background-color: themed('secondaryAccent');
+  }
+}
+
 .OptionsList-item-clickable {
   cursor: pointer;
 }
