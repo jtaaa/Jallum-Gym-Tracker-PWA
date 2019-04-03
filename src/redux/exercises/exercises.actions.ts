@@ -1,6 +1,6 @@
 import { Exercise, ExercisesActionTypes, AddExercisesAction, RefreshExercisesThunkAction, SetExercisesAction, AddExerciseThunkAction, ExercisePartial } from './exercises.types';
 
-import { defaultFetchHeaders } from '../../utils';
+import { defaultFetchHeaders, API } from '../../utils';
 
 const addExercises = (exercises: Array<Exercise>): AddExercisesAction => ({
   type: ExercisesActionTypes.ADD_EXERCISES,
@@ -14,7 +14,7 @@ const setExercises = (exercises: Array<Exercise>): SetExercisesAction => ({
 
 export const refreshExercises = (): RefreshExercisesThunkAction =>
   async (dispatch) => {
-    const resp = await fetch('/api/exercises');
+    const resp = await fetch(API`/exercises`);
     if (!resp.ok) return console.log('Huh, I couldn\'t exercises from the backend. Weird.');
     const exercises = await resp.json();
     dispatch(setExercises(exercises));
@@ -23,7 +23,7 @@ export const refreshExercises = (): RefreshExercisesThunkAction =>
 
 export const addExercise = (exercise: ExercisePartial): AddExerciseThunkAction =>
   async (dispatch) => {
-    const resp = await fetch('/api/exercises', {
+    const resp = await fetch(API`exercises`, {
       method: 'PUT',
       headers: defaultFetchHeaders,
       body: JSON.stringify(exercise),

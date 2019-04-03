@@ -17,6 +17,8 @@ import { ActionType } from './../../redux/action.type';
 import { State } from './../../redux/state.types';
 import { refreshProfile } from './../../redux/profile';
 
+import { API } from '../../utils';
+
 class App extends Component<AppProps, AppState> {
   componentDidMount() {
     this.props.refreshProfile();
@@ -33,7 +35,7 @@ class App extends Component<AppProps, AppState> {
           <SessionRecorder />
           { !this.props.isLoggedIn &&
           <Platform>
-            <a href="/api/auth/google">
+            <a href={API`/auth/google`}>
               <div className="App-login">
                 <Typography dim>Login</Typography>
               </div>
