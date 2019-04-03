@@ -5,7 +5,9 @@ import thunk from 'redux-thunk';
 
 import { createRootReducer } from './rootReducer';
 
-export const history = createBrowserHistory();
+export const history = createBrowserHistory({
+  basename: process.env.PUBLIC_URL,
+});
 
 const store = createStore(
   createRootReducer(history),
