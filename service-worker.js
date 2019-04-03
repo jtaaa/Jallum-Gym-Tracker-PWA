@@ -25,7 +25,7 @@ self.addEventListener('fetch', (event) => {
 workbox.precaching.precacheAndRoute([
   {
     "url": "asset-manifest.json",
-    "revision": "bc734f69fa2ff36b5029475c70a4ed53"
+    "revision": "a636d538b976488b16af60ee06c84f48"
   },
   {
     "url": "favicon.ico",
@@ -33,15 +33,15 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "index.html",
-    "revision": "1c979a9d0ce006d51e7e27a7723e39da"
+    "revision": "e69717ad3e79e73c9ce6f0e3fc7db95b"
   },
   {
     "url": "manifest.json",
     "revision": "57e25bc1066b9aa1654e23059bfa8096"
   },
   {
-    "url": "precache-manifest.dfe9518156b38df3fc78927cb2cbcd14.js",
-    "revision": "dfe9518156b38df3fc78927cb2cbcd14"
+    "url": "precache-manifest.c0370389296d7a0ed25c48b126f44d00.js",
+    "revision": "c0370389296d7a0ed25c48b126f44d00"
   },
   {
     "url": "static/css/main.3335147b.chunk.css",
@@ -52,11 +52,11 @@ workbox.precaching.precacheAndRoute([
     "revision": "03d8876c7e1c1d395f306b493b7aff4b"
   },
   {
-    "url": "static/js/main.16150a69.chunk.js",
-    "revision": "f22ced0f888bf264a6f136535483bd81"
+    "url": "static/js/main.fdb89c4c.chunk.js",
+    "revision": "2f0d31a0d212411d72001eaeb1a0ffc7"
   },
   {
-    "url": "static/js/runtime~main.885d46d7.js",
-    "revision": "6ccfcbaccf4456918b7f63037d225d81"
+    "url": "static/js/runtime~main.a8a9905a.js",
+    "revision": "238c9148d722c1b6291779bd879837a1"
   }
 ], {});

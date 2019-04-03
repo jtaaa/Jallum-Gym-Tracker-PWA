@@ -1,13 +1,13 @@
 {
-  "main.css": "/Jallum-Gym-Tracker-PWA/static/css/main.3335147b.chunk.css",
-  "main.js": "/Jallum-Gym-Tracker-PWA/static/js/main.16150a69.chunk.js",
-  "main.js.map": "/Jallum-Gym-Tracker-PWA/static/js/main.16150a69.chunk.js.map",
-  "runtime~main.js": "/Jallum-Gym-Tracker-PWA/static/js/runtime~main.885d46d7.js",
-  "runtime~main.js.map": "/Jallum-Gym-Tracker-PWA/static/js/runtime~main.885d46d7.js.map",
-  "static/js/2.8cc2d9eb.chunk.js": "/Jallum-Gym-Tracker-PWA/static/js/2.8cc2d9eb.chunk.js",
-  "static/js/2.8cc2d9eb.chunk.js.map": "/Jallum-Gym-Tracker-PWA/static/js/2.8cc2d9eb.chunk.js.map",
-  "index.html": "/Jallum-Gym-Tracker-PWA/index.html",
-  "precache-manifest.dfe9518156b38df3fc78927cb2cbcd14.js": "/Jallum-Gym-Tracker-PWA/precache-manifest.dfe9518156b38df3fc78927cb2cbcd14.js",
-  "service-worker.js": "/Jallum-Gym-Tracker-PWA/service-worker.js",
-  "static/css/main.3335147b.chunk.css.map": "/Jallum-Gym-Tracker-PWA/static/css/main.3335147b.chunk.css.map"
+  "main.css": "/static/css/main.3335147b.chunk.css",
+  "main.js": "/static/js/main.fdb89c4c.chunk.js",
+  "main.js.map": "/static/js/main.fdb89c4c.chunk.js.map",
+  "runtime~main.js": "/static/js/runtime~main.a8a9905a.js",
+  "runtime~main.js.map": "/static/js/runtime~main.a8a9905a.js.map",
+  "static/js/2.8cc2d9eb.chunk.js": "/static/js/2.8cc2d9eb.chunk.js",
+  "static/js/2.8cc2d9eb.chunk.js.map": "/static/js/2.8cc2d9eb.chunk.js.map",
+  "index.html": "/index.html",
+  "precache-manifest.c0370389296d7a0ed25c48b126f44d00.js": "/precache-manifest.c0370389296d7a0ed25c48b126f44d00.js",
+  "service-worker.js": "/service-worker.js",
+  "static/css/main.3335147b.chunk.css.map": "/static/css/main.3335147b.chunk.css.map"
 }
