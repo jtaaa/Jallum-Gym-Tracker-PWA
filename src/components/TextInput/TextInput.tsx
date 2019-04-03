@@ -2,7 +2,7 @@ import React, { FunctionComponent, ChangeEvent } from 'react';
 import './TextInput.scss';
 import { TextInputProps } from './TextInput.types';
 
-export const TextInput: FunctionComponent<TextInputProps> = ({ value, onChange }) => {
+const TextInput: FunctionComponent<TextInputProps> = ({ value, onChange }) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => onChange(e.target.value, e);
   return (
     <div className="TextInput">
