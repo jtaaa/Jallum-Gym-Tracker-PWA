@@ -48,6 +48,10 @@ workbox.precaching.precacheAndRoute([
     "revision": "e03ac2638d9cf404b9a8069a60e7618a"
   },
   {
+    "url": "static/js/2.4cbc350b.chunk.js",
+    "revision": "142e7b8554b5dd5742d08d09f9d3b0da"
+  },
+  {
     "url": "static/js/main.543b4f64.chunk.js",
     "revision": "a265fc7c010bb39658efdf51bb6ddf84"
   },
