@@ -196,7 +196,7 @@ class SessionRecorder extends Component<SessionRecorderProps, SessionRecorderSta
                 <div className="SessionRecorder-heading">
                   <Typography dim={true}>New Exercise</Typography>
                 </div>
-                <TextInput value={this.state.newExercise} onChange={this.updateNewExercise} />
+                <TextInput value={this.state.newExercise} onChange={this.updateNewExercise} autoFocus />
                 <div className="SessionRecorder-heading">
                   <Typography dim={true}>Muscle Groups</Typography>
                   <Typography dim={true} small>(double-click for secondary)</Typography>

@@ -2,7 +2,7 @@ import React, { FunctionComponent, ChangeEvent } from 'react';
 import './TextInput.scss';
 import { TextInputProps } from './TextInput.types';
 
-const TextInput: FunctionComponent<TextInputProps> = ({ value, onChange }) => {
+const TextInput: FunctionComponent<TextInputProps> = ({ value, onChange, autoFocus }) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => onChange(e.target.value, e);
   return (
     <div className="TextInput">
@@ -11,6 +11,7 @@ const TextInput: FunctionComponent<TextInputProps> = ({ value, onChange }) => {
         type="text"
         value={value}
         onChange={handleChange}
+        autoFocus={autoFocus}
       />
     </div>
   );
