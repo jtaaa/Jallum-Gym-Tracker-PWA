@@ -3,7 +3,7 @@ import { CallHistoryMethodAction } from 'connected-react-router';
 
 import { StartSessionAction, StartSetAction, EndSetAction } from './../../redux/sessions';
 import { OptionsListOption } from './../../components/OptionsList/OptionsList.types';
-import { Exercise } from '../../redux/exercises';
+import { Exercise, ExercisePartial } from '../../redux/exercises';
 
 export interface SessionRecorderReduxDispatchProps {
   navigateTo: (route: string) => CallHistoryMethodAction,
@@ -13,6 +13,7 @@ export interface SessionRecorderReduxDispatchProps {
   endSet: (reps: number, weight: number) => EndSetAction,
   refreshExercises: () => Promise<void>,
   refreshSessions: () => Promise<void>,
+  addExercise: (exercise: ExercisePartial) => Promise<void>,
 };
 
 export interface SessionRecorderReduxStateProps {
@@ -28,13 +29,15 @@ export interface SessionRecorderProps extends SessionRecorderReduxProps {
 export type SessionRecorderOptionsListOption = OptionsListOption<Exercise>;
 
 export interface SessionRecorderState {
-  muscleGroupOptions: Array<OptionsListOption>;
+  sessionMuscleGroupOptions: Array<OptionsListOption>;
+  newExerciseMuscleGroupOptions: Array<OptionsListOption>;
   exercise?: Exercise;
   reps: number;
   repsUnit: number;
   weight: number;
   weightUnit: number;
   inSet: boolean;
-  setSummaries: Array<string>
+  setSummaries: Array<string>;
+  newExercise: string;
 };
 

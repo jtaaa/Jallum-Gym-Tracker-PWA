@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch, Link } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { push as navigateTo } from 'connected-react-router';
 import './SessionRecorder.scss';
@@ -12,13 +12,14 @@ import OptionsList from './../../components/OptionsList/OptionsList';
 import StopWatch from './../../components/StopWatch/StopWatch';
 import HorizontalControl from './../../components/HorizontalControl/HorizontalControl';
 import TextList from './../../components/TextList/TextList';
+import TextInput from './../../components/TextInput/TextInput';
 
 import { ThunkDispatch } from 'redux-thunk';
 
 import { ActionType } from './../../redux/action.type';
 import { startSession, startSet, endSet, endAndSaveSession, refreshSessions } from './../../redux/sessions';
 import { State } from './../../redux/state.types';
-import { Exercise, refreshExercises } from './../../redux/exercises';
+import { Exercise, refreshExercises, addExercise, ExercisePartial } from './../../redux/exercises';
 
 class SessionRecorder extends Component<SessionRecorderProps, SessionRecorderState> {
   constructor(props: SessionRecorderProps) {
@@ -27,7 +28,7 @@ class SessionRecorder extends Component<SessionRecorderProps, SessionRecorderSta
     this.state = {
       reps: 8,
       weight: 30,
-      muscleGroupOptions: [
+      sessionMuscleGroupOptions: [
         { selected: false, value: 'Shoulders' },
         { selected: false, value: 'Legs' },
         { selected: false, value: 'Back' },
@@ -36,10 +37,20 @@ class SessionRecorder extends Component<SessionRecorderProps, SessionRecorderSta
         { selected: false, value: 'Triceps' },
         { selected: false, value: 'Abs' },
       ],
+      newExerciseMuscleGroupOptions: [
+        { selected: false, highlighted: false, value: 'Shoulders' },
+        { selected: false, highlighted: false, value: 'Legs' },
+        { selected: false, highlighted: false, value: 'Back' },
+        { selected: false, highlighted: false, value: 'Chest' },
+        { selected: false, highlighted: false, value: 'Biceps' },
+        { selected: false, highlighted: false, value: 'Triceps' },
+        { selected: false, highlighted: false, value: 'Abs' },
+      ],
       inSet: false,
       weightUnit: 5,
       repsUnit: 1,
       setSummaries: [],
+      newExercise: '',
     };
 
     this.handleBackgroundClick = this.handleBackgroundClick.bind(this);
@@ -50,6 +61,10 @@ class SessionRecorder extends Component<SessionRecorderProps, SessionRecorderSta
     this.decreaseWeight = this.decreaseWeight.bind(this);
     this.nextExercise = this.nextExercise.bind(this);
     this.completeSession = this.completeSession.bind(this);
+    this.newExercise = this.newExercise.bind(this);
+    this.updateNewExercise = this.updateNewExercise.bind(this);
+    this.cancelNewExercise = this.cancelNewExercise.bind(this);
+    this.addNewExercise = this.addNewExercise.bind(this);
   }
 
   private setsStopWatchRef = React.createRef<StopWatch>();
@@ -64,7 +79,7 @@ class SessionRecorder extends Component<SessionRecorderProps, SessionRecorderSta
       case '/':
         return this.props.navigateTo('/musclegroups');
       case '/musclegroups':
-        const muscleGroups = this.state.muscleGroupOptions.filter(mgo => mgo.selected).map(mgo => mgo.value);
+        const muscleGroups = this.state.sessionMuscleGroupOptions.filter(mgo => mgo.selected).map(mgo => mgo.value);
         if (!muscleGroups.length) return;
         this.props.startSession(muscleGroups);
         return this.props.navigateTo('/exercise');
@@ -99,7 +114,7 @@ class SessionRecorder extends Component<SessionRecorderProps, SessionRecorderSta
     switch(this.props.location.pathname) {
       case '/musclegroups':
         return this.setState(state => ({
-          muscleGroupOptions: state.muscleGroupOptions.map(mgo => ({
+          sessionMuscleGroupOptions: state.sessionMuscleGroupOptions.map(mgo => ({
             value: mgo.value,
             selected: mgo.value === option.value ? !mgo.selected : mgo.selected,
           })),
@@ -107,6 +122,14 @@ class SessionRecorder extends Component<SessionRecorderProps, SessionRecorderSta
       case '/exercise':
         option.extra && this.setState({ exercise: option.extra });
         return this.props.navigateTo('/sets');
+      case '/exercise/add':
+        return this.setState(state => ({
+          newExerciseMuscleGroupOptions: state.newExerciseMuscleGroupOptions.map(mgo => ({
+            value: mgo.value,
+            selected: mgo.value === option.value ? !mgo.selected && !mgo.highlighted : mgo.selected,
+            highlighted: mgo.value === option.value ? mgo.selected && !mgo.highlighted : mgo.highlighted,
+          })),
+        }));
     }
   }
 
@@ -140,11 +163,53 @@ class SessionRecorder extends Component<SessionRecorderProps, SessionRecorderSta
     this.props.navigateTo('/');
   }
 
+  newExercise() {
+    this.props.navigateTo('/exercise/add');
+  }
+
+  updateNewExercise(newExercise: string) {
+    this.setState({ newExercise });
+  }
+
+  async addNewExercise() {
+    if (this.state.newExercise) {
+      await this.props.addExercise({
+        name: this.state.newExercise,
+        primaryMuscleGroups: this.state.newExerciseMuscleGroupOptions.filter(mgo => mgo.selected).map(mgo => mgo.value),
+        secondaryMuscleGroups: this.state.newExerciseMuscleGroupOptions.filter(mgo => mgo.highlighted).map(mgo => mgo.value),
+      });
+      this.props.navigateTo('/exercise');
+    }
+  }
+
+  cancelNewExercise() {
+    this.props.navigateTo('/exercise');
+  }
+
   render() {
     return (
       <div className="SessionRecorder" onClick={this.handleBackgroundClick}>
         <div className="SessionRecorder-content">
           <Switch>
+            <Route path="/exercise/add" render={() => (
+              <div>
+                <div className="SessionRecorder-heading">
+                  <Typography dim={true}>New Exercise</Typography>
+                </div>
+                <TextInput value={this.state.newExercise} onChange={this.updateNewExercise} />
+                <div className="SessionRecorder-heading">
+                  <Typography dim={true}>Muscle Groups</Typography>
+                  <Typography dim={true} small>(double-click for secondary)</Typography>
+                </div>
+                <OptionsList options={this.state.newExerciseMuscleGroupOptions} handleClick={this.handleOptionsListItemClick}/>
+                <div className="SessionRecorder-button-list">
+                  { this.state.newExercise &&
+                  <IconButton icon="done" outline="dashed" handleClick={this.addNewExercise} />
+                  }
+                  <IconButton icon="cancel" outline="dashed" handleClick={this.cancelNewExercise} />
+                </div>
+              </div>
+            )} />            
             <Route path="/sets" render={() => (
               <div>
                 <div className="SessionRecorder-heading">
@@ -198,7 +263,7 @@ class SessionRecorder extends Component<SessionRecorderProps, SessionRecorderSta
                 <OptionsList options={this.props.exerciseOptions} handleClick={this.handleOptionsListItemClick}/>
                 <div className="SessionRecorder-button-list">
                   <IconButton icon="done" outline="dashed" handleClick={this.completeSession} />
-                  <IconButton icon="add" outline="dashed" />
+                  <IconButton icon="add" outline="dashed" handleClick={this.newExercise} />
                   <IconButton icon="next" />
                 </div>
               </div>
@@ -208,7 +273,7 @@ class SessionRecorder extends Component<SessionRecorderProps, SessionRecorderSta
                 <div className="SessionRecorder-heading">
                   <Typography dim={true}>Muscle Groups</Typography>
                 </div>
-                <OptionsList options={this.state.muscleGroupOptions} handleClick={this.handleOptionsListItemClick}/>
+                <OptionsList options={this.state.sessionMuscleGroupOptions} handleClick={this.handleOptionsListItemClick}/>
                 <IconButton icon="next" />
               </div>
             )} />
@@ -256,6 +321,7 @@ const mapDispathToProps = (dispatch: ThunkDispatch<State, undefined, ActionType>
   endSet: (reps: number, weight: number) => dispatch(endSet(reps, weight)),
   refreshExercises: () => dispatch(refreshExercises()),
   refreshSessions: () => dispatch(refreshSessions()),
+  addExercise: (exercise: ExercisePartial) => dispatch(addExercise(exercise))
 });
 
 export default connect(
