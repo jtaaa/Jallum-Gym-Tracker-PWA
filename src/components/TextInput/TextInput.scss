@@ -1,0 +1,15 @@
+@import './../../styles/themes';
+
+.TextInput-input {
+  @include themify($themes) {
+    color: themed('textColor');
+    border-bottom: 1px solid themed('primaryAccent');
+  }
+  text-align: center;
+  width: 100%;
+  padding-bottom: 0.5em;
+  border: none;
+  outline: none;
+  background: none;
+}
+
