@@ -53,10 +53,9 @@ const Button = ({ icon, outline = 'none', margin = true, stopPropagation = false
       break;
     case 'cancel':
       iconSVG = (
-        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="32" cy="32" r="31.5" stroke="#959595" stroke-dasharray="6 6"/>
-          <rect x="42.6066" y="19.9792" width="2" height="32" transform="rotate(45 42.6066 19.9792)" fill="#959595"/>
-          <rect x="21.3934" y="19.9792" width="32" height="2" transform="rotate(45 21.3934 19.9792)" fill="#959595"/>
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="31.955" y="14.9844" width="1.5" height="24" transform="rotate(45 31.955 14.9844)" fill="#959595"/>
+          <rect x="16.045" y="14.9844" width="24" height="1.5" transform="rotate(45 16.045 14.9844)" fill="#959595"/>
         </svg>
       );
       break;
