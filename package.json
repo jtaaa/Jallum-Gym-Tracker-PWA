@@ -2,7 +2,7 @@
   "name": "gym-tracker-pwa",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://jtaaa.github.io/Jallum-Gym-Tracker-PWA",
+  "homepage": "https://jallum.fitness",
   "dependencies": {
     "@types/history": "^4.7.2",
     "@types/jest": "24.0.11",
