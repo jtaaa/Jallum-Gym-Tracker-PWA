@@ -19,7 +19,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import { ActionType } from './../../redux/action.type';
 import { startSession, startSet, endSet, endAndSaveSession, refreshSessions } from './../../redux/sessions';
 import { State } from './../../redux/state.types';
-import { Exercise, refreshExercises, addExercise, ExercisePartial } from './../../redux/exercises';
+import { Exercise, refreshExercises, addExercise, ExercisePartial, getExerciseConfig } from './../../redux/exercises';
 
 class SessionRecorder extends Component<SessionRecorderProps, SessionRecorderState> {
   constructor(props: SessionRecorderProps) {
@@ -66,6 +66,7 @@ class SessionRecorder extends Component<SessionRecorderProps, SessionRecorderSta
     this.updateNewExercise = this.updateNewExercise.bind(this);
     this.cancelNewExercise = this.cancelNewExercise.bind(this);
     this.addNewExercise = this.addNewExercise.bind(this);
+    this.getExerciseConfig = this.getExerciseConfig.bind(this);
   }
 
   private setsStopWatchRef = React.createRef<StopWatch>();
@@ -75,7 +76,7 @@ class SessionRecorder extends Component<SessionRecorderProps, SessionRecorderSta
     this.props.refreshSessions();
   }
   
-  handleBackgroundClick() {
+  async handleBackgroundClick() {
     switch(this.props.location.pathname) {
       case '/':
         return this.props.navigateTo('/musclegroups');
@@ -98,20 +99,27 @@ class SessionRecorder extends Component<SessionRecorderProps, SessionRecorderSta
               this.setState({ inSet: true });
             } else {
               node.stop();
-              this.props.endSet(this.state.reps, this.state.weight);
-              this.setState(state => ({
-                inSet: false,
-                setSummaries: [ ...state.setSummaries,
-                  `${this.state.reps} reps at ${this.state.weight}lbs`
-                ],
-              }));
+              if (this.state.exercise) {
+                this.props.endSet(this.state.reps, this.state.weight);
+                this.setState(state => ({
+                  inSet: false,
+                  setSummaries: [ ...state.setSummaries,
+                    `${this.state.reps} reps at ${this.state.weight}lbs`
+                  ],
+                }), async () => {
+                  if (this.state.exercise) {
+                    const exerciseConfig = await this.getExerciseConfig(this.state.exercise);
+                    this.setState(exerciseConfig);
+                  }
+                });
+              }
             }
           }
         }
     }
   }
 
-  handleOptionsListItemClick(option: SessionRecorderOptionsListOption) { 
+  async handleOptionsListItemClick(option: SessionRecorderOptionsListOption) { 
     switch(this.props.location.pathname) {
       case '/musclegroups':
         return this.setState(state => ({
@@ -121,8 +129,11 @@ class SessionRecorder extends Component<SessionRecorderProps, SessionRecorderSta
           })),
         }));
       case '/exercise':
-        option.extra && this.setState({ exercise: option.extra });
-        return this.props.navigateTo('/sets');
+        if (option.extra) {
+          const exerciseConfig = await this.getExerciseConfig(option.extra);
+          this.setState({ exercise: option.extra, ...exerciseConfig })
+          return this.props.navigateTo('/sets');
+        }
       case '/exercise/add':
         return this.setState(state => ({
           newExerciseMuscleGroupOptions: state.newExerciseMuscleGroupOptions.map(mgo => ({
@@ -189,6 +200,10 @@ class SessionRecorder extends Component<SessionRecorderProps, SessionRecorderSta
 
   cancelNewExercise() {
     this.props.navigateTo('/exercise');
+  }
+
+  async getExerciseConfig(exercise: Exercise) {
+    return await this.props.getExerciseConfig(exercise, this.state.setSummaries.length);
   }
 
   render() {
@@ -326,7 +341,8 @@ const mapDispathToProps = (dispatch: ThunkDispatch<State, undefined, ActionType>
   endSet: (reps: number, weight: number) => dispatch(endSet(reps, weight)),
   refreshExercises: () => dispatch(refreshExercises()),
   refreshSessions: () => dispatch(refreshSessions()),
-  addExercise: (exercise: ExercisePartial) => dispatch(addExercise(exercise))
+  addExercise: (exercise: ExercisePartial) => dispatch(addExercise(exercise)),
+  getExerciseConfig: (exercise: Exercise, setPosition) => dispatch(getExerciseConfig(exercise, setPosition))
 });
 
 export default connect(

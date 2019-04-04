@@ -26,6 +26,8 @@ export type RefreshExercisesThunkAction = ThunkAction<Promise<void>, State, unde
 
 export type AddExerciseThunkAction = ThunkAction<Promise<Exercise>, State, undefined, AddExercisesAction>;
 
+export type GetExerciseConfigThunkAction = ThunkAction<Promise<ExerciseConfig>, State, undefined, Action>;
+
 export type ExercisesAction = AddExercisesAction | SetExercisesAction;
 
 export interface ExercisePartial {
@@ -40,6 +42,11 @@ export interface Exercise {
   name: string,
   primaryMuscleGroups: Array<string>,
   secondaryMuscleGroups: Array<string>,
+};
+
+export interface ExerciseConfig {
+  weight: number,
+  reps: number,
 };
 
 export type ExercisesState = Array<Exercise>;
