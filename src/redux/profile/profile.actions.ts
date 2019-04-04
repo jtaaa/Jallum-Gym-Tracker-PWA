@@ -9,7 +9,7 @@ export const setProfile = (profile: Profile): SetProfileAction => ({
 
 export const refreshProfile = (): RefreshProfileThunkAction =>
   async (dispatch) => {
-    const resp = await fetch(API`/users`);
+    const resp = await fetch(API`/users`, { credentials: 'include' });
     if (!resp.ok) return console.log('You aren\'t logged in. That\'s okay tho.');
     const profile = await resp.json();
     dispatch(setProfile(profile));

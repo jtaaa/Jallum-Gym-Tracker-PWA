@@ -9,7 +9,7 @@ export const setSessions = (sessions: Array<Session>): SetSessionAction => ({
 
 export const refreshSessions = (): RefreshSessionsThunkAction =>
   async (dispatch) => {
-    const resp = await fetch(API`/sessions`);
+    const resp = await fetch(API`/sessions`, { credentials: 'include' });
     if (!resp.ok) return console.log('Huh, I couldn\'t get your session. Weird.');
     const sessions = await resp.json();
     dispatch(setSessions(sessions));
@@ -31,6 +31,7 @@ export const endAndSaveSession = (): EndAndSaveSessionsThunkAction =>
     const { sessions } = getState().sessions;
     if (sessions.length) {
       const resp = await fetch(API`/sessions`, {
+        credentials: 'include',
         method: 'POST',
         headers: defaultFetchHeaders,
         body: JSON.stringify({ session: sessions[sessions.length - 1] }),
