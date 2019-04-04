@@ -23,7 +23,7 @@ export const refreshExercises = (): RefreshExercisesThunkAction =>
 
 export const addExercise = (exercise: ExercisePartial): AddExerciseThunkAction =>
   async (dispatch) => {
-    const resp = await fetch(API`exercises`, {
+    const resp = await fetch(API`/exercises`, {
       method: 'PUT',
       headers: defaultFetchHeaders,
       body: JSON.stringify(exercise),
