@@ -24,7 +24,7 @@ export interface SetExercisesAction extends Action {
 
 export type RefreshExercisesThunkAction = ThunkAction<Promise<void>, State, undefined, SetExercisesAction>;
 
-export type AddExerciseThunkAction = ThunkAction<Promise<void>, State, undefined, AddExercisesAction>;
+export type AddExerciseThunkAction = ThunkAction<Promise<Exercise>, State, undefined, AddExercisesAction>;
 
 export type ExercisesAction = AddExercisesAction | SetExercisesAction;
 

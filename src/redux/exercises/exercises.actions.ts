@@ -31,5 +31,6 @@ export const addExercise = (exercise: ExercisePartial): AddExerciseThunkAction =
     if (!resp.ok) return console.log('Huh, I couldn\'t save the exercise in the backend. Weird.');
     const exercises = await resp.json();
     dispatch(addExercises([ exercises ]));
+    return exercises;
   }
 ;

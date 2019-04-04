@@ -51,6 +51,7 @@ class SessionRecorder extends Component<SessionRecorderProps, SessionRecorderSta
       repsUnit: 1,
       setSummaries: [],
       newExercise: '',
+      newExerciseOptions: [],
     };
 
     this.handleBackgroundClick = this.handleBackgroundClick.bind(this);
@@ -173,11 +174,15 @@ class SessionRecorder extends Component<SessionRecorderProps, SessionRecorderSta
 
   async addNewExercise() {
     if (this.state.newExercise) {
-      await this.props.addExercise({
+      const newExercise = await this.props.addExercise({
         name: this.state.newExercise,
         primaryMuscleGroups: this.state.newExerciseMuscleGroupOptions.filter(mgo => mgo.selected).map(mgo => mgo.value),
         secondaryMuscleGroups: this.state.newExerciseMuscleGroupOptions.filter(mgo => mgo.highlighted).map(mgo => mgo.value),
       });
+      this.setState(state => ({ newExerciseOptions: [
+        ...state.newExerciseOptions,
+        { selected: false, highlighted: false, value: newExercise.name, extra: newExercise },
+      ] }));
       this.props.navigateTo('/exercise');
     }
   }
@@ -260,7 +265,7 @@ class SessionRecorder extends Component<SessionRecorderProps, SessionRecorderSta
                 <div className="SessionRecorder-heading">
                   <Typography dim={true}>Exercise</Typography>
                 </div>
-                <OptionsList options={this.props.exerciseOptions} handleClick={this.handleOptionsListItemClick}/>
+                <OptionsList options={[ ...this.props.exerciseOptions, ...this.state.newExerciseOptions ]} handleClick={this.handleOptionsListItemClick} />
                 <div className="SessionRecorder-button-list">
                   <IconButton icon="done" outline="dashed" handleClick={this.completeSession} />
                   <IconButton icon="add" outline="dashed" handleClick={this.newExercise} />

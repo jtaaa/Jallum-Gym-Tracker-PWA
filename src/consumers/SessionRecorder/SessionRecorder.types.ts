@@ -13,7 +13,7 @@ export interface SessionRecorderReduxDispatchProps {
   endSet: (reps: number, weight: number) => EndSetAction,
   refreshExercises: () => Promise<void>,
   refreshSessions: () => Promise<void>,
-  addExercise: (exercise: ExercisePartial) => Promise<void>,
+  addExercise: (exercise: ExercisePartial) => Promise<Exercise>,
 };
 
 export interface SessionRecorderReduxStateProps {
@@ -39,5 +39,6 @@ export interface SessionRecorderState {
   inSet: boolean;
   setSummaries: Array<string>;
   newExercise: string;
+  newExerciseOptions: Array<SessionRecorderOptionsListOption>;
 };
 
