@@ -9,6 +9,7 @@ export enum SessionsActionTypes {
   START_SET = 'START_SET',
   END_SET = 'END_SET',
   SET_SESSIONS = 'SET_SESSIONS',
+  CANCEL_SET = 'CANCEL_SET',
 };
 
 export interface StartSessionAction extends Action {
@@ -48,11 +49,16 @@ export interface EndSetAction extends Action {
   };
 };
 
+export interface CancelSetAction extends Action {
+  type: SessionsActionTypes.CANCEL_SET;
+};
+
 export type SessionsAction = StartSessionAction
                            | EndSessionAction
                            | StartSetAction
                            | EndSetAction
-                           | SetSessionAction;
+                           | SetSessionAction
+                           | CancelSetAction;
 
 export interface SetPartial {
   exercise: string,

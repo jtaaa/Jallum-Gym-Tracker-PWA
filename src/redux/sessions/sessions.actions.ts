@@ -1,6 +1,7 @@
-import { SessionsActionTypes, StartSessionAction, StartSetAction, EndSessionAction, EndSetAction, RefreshSessionsThunkAction, EndAndSaveSessionsThunkAction, SetSessionAction, Session } from './sessions.types';
+import { SessionsActionTypes, StartSessionAction, StartSetAction, EndSessionAction, EndSetAction, RefreshSessionsThunkAction, EndAndSaveSessionsThunkAction, SetSessionAction, Session, CancelSetAction } from './sessions.types';
 
 import { defaultFetchHeaders, API } from './../../utils';
+import { Action } from 'redux';
 
 export const setSessions = (sessions: Array<Session>): SetSessionAction => ({
   type: SessionsActionTypes.SET_SESSIONS,
@@ -49,4 +50,8 @@ export const startSet = (exercise: string): StartSetAction => ({
 export const endSet = (reps: number, weight: number): EndSetAction => ({
   type: SessionsActionTypes.END_SET,
   payload: { reps, weight },
+});
+
+export const cancelSet = (): CancelSetAction => ({
+  type: SessionsActionTypes.CANCEL_SET,
 });
