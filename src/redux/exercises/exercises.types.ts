@@ -35,6 +35,10 @@ export interface ExercisePartial {
   name: string;
   primaryMuscleGroups: Array<string>;
   secondaryMuscleGroups: Array<string>;
+  defaultWeight: number;
+  defaultWeightUnit: number;
+  defaultReps: number;
+  defaultRepsUnit: number;
 }
 
 export interface Exercise {
@@ -42,11 +46,17 @@ export interface Exercise {
   name: string;
   primaryMuscleGroups: Array<string>;
   secondaryMuscleGroups: Array<string>;
+  defaultWeight: number;
+  defaultWeightUnit: number;
+  defaultReps: number;
+  defaultRepsUnit: number;
 };
 
 export interface ExerciseConfig {
   weight: number;
   reps: number;
+  weightUnit: number;
+  repsUnit: number;
 };
 
 export type ExercisesState = Array<Exercise>;

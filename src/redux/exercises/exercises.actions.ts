@@ -38,18 +38,23 @@ export const addExercise = (exercise: ExercisePartial): AddExerciseThunkAction =
 export const getExerciseConfig = (exercise: Exercise, setPosition: number): GetExerciseConfigThunkAction =>
   async (dispatch, getState) => {
     const sessions = Array.from(getState().sessions.sessions);
-    sessions.reverse();
-    for (const session of sessions) {
-      const matchingSets = session.sets.filter(set => set.exercise === exercise._id);
-      if (matchingSets[setPosition]) return {
-        weight: matchingSets[setPosition].weight,
-        reps: matchingSets[setPosition].reps
-      };
-      if (matchingSets[matchingSets.length - 1]) return {
+    for (let i = sessions.length - 1; i >= 0; --i) {
+      const matchingSets = sessions[i].sets.filter(set => set.exercise === exercise._id);
+      let choiceIndex = setPosition;
+      // choose the last weight completed if doing more sets than last time
+      if (!matchingSets[choiceIndex]) choiceIndex = matchingSets.length - 1;
+      if (matchingSets[choiceIndex]) return {
         weight: matchingSets[matchingSets.length - 1].weight,
-        reps: matchingSets[matchingSets.length - 1].reps
+        reps: matchingSets[matchingSets.length - 1].reps,
+        weightUnit: exercise.defaultWeightUnit,
+        repsUnit: exercise.defaultRepsUnit,
       };
     }
-    return { weight: 30, reps: 10 };
+    return {
+      weight: exercise.defaultWeight,
+      reps: exercise.defaultReps,
+      weightUnit: exercise.defaultWeightUnit,
+      repsUnit: exercise.defaultRepsUnit,
+    };
   }
 ;

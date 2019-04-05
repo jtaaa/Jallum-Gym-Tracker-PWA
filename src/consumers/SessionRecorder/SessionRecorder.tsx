@@ -159,6 +159,20 @@ class SessionRecorder extends Component<SessionRecorderProps, SessionRecorderSta
     this.setState(state => ({ weight: state.weight - this.state.weightUnit }));
   }
 
+  increaseRepsUnit() {
+    this.setState(state => ({ repsUnit: state.repsUnit + 1 }));
+  }
+  decreaseRepsUnit() {
+    this.setState(state => ({ repsUnit: state.repsUnit - 1 }));
+  }
+
+  increaseWeightUnit() {
+    this.setState(state => ({ weightUnit: state.weightUnit + 1 }));
+  }
+  decreaseWeightUnit() {
+    this.setState(state => ({ weightUnit: state.weightUnit - 1 }));
+  }
+
   renderSetPrefix(index: number) {
     return `Set ${index + 1}: `;
   }
@@ -189,6 +203,10 @@ class SessionRecorder extends Component<SessionRecorderProps, SessionRecorderSta
         name: this.state.newExercise,
         primaryMuscleGroups: this.state.newExerciseMuscleGroupOptions.filter(mgo => mgo.selected).map(mgo => mgo.value),
         secondaryMuscleGroups: this.state.newExerciseMuscleGroupOptions.filter(mgo => mgo.highlighted).map(mgo => mgo.value),
+        defaultWeight: this.state.weight,
+        defaultWeightUnit: this.state.weightUnit,
+        defaultReps: this.state.reps,
+        defaultRepsUnit: this.state.reps,
       });
       this.setState(state => ({ newExerciseOptions: [
         ...state.newExerciseOptions,
@@ -222,6 +240,50 @@ class SessionRecorder extends Component<SessionRecorderProps, SessionRecorderSta
                   <Typography dim={true} small>(double-click for secondary)</Typography>
                 </div>
                 <OptionsList options={this.state.newExerciseMuscleGroupOptions} handleClick={this.handleOptionsListItemClick}/>
+                <div className="SessionRecorder-number-input">
+                  <Typography dim small>default reps</Typography>
+                  <div className="SessionRecorder-number-input-control">
+                    <HorizontalControl
+                      start={{ icon: 'minus', handleClick: this.decreaseReps }}
+                      end={{ icon: 'add', handleClick: this.increaseReps }}
+                    >
+                      { this.state.reps }
+                    </HorizontalControl>
+                  </div>
+                </div>
+                <div className="SessionRecorder-number-input">
+                  <Typography dim small>default weight</Typography>
+                  <div className="SessionRecorder-number-input-control">
+                    <HorizontalControl
+                      start={{ icon: 'minus', handleClick: this.decreaseWeight }}
+                      end={{ icon: 'add', handleClick: this.increaseWeight }}
+                    >
+                      { this.state.weight }
+                    </HorizontalControl>
+                  </div>
+                </div>
+                <div className="SessionRecorder-number-input">
+                  <Typography dim small>default reps step</Typography>
+                  <div className="SessionRecorder-number-input-control">
+                    <HorizontalControl
+                      start={{ icon: 'minus', handleClick: this.decreaseRepsUnit }}
+                      end={{ icon: 'add', handleClick: this.increaseRepsUnit }}
+                    >
+                      { this.state.repsUnit }
+                    </HorizontalControl>
+                  </div>
+                </div>
+                <div className="SessionRecorder-number-input">
+                  <Typography dim small>default weight step</Typography>
+                  <div className="SessionRecorder-number-input-control">
+                    <HorizontalControl
+                      start={{ icon: 'minus', handleClick: this.decreaseWeightUnit }}
+                      end={{ icon: 'add', handleClick: this.increaseWeightUnit }}
+                    >
+                      { this.state.weightUnit }
+                    </HorizontalControl>
+                  </div>
+                </div>
                 <div className="SessionRecorder-button-list">
                   { this.state.newExercise &&
                   <IconButton icon="done" outline="dashed" handleClick={this.addNewExercise} />
