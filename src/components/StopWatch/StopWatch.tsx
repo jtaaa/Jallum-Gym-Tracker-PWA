@@ -45,11 +45,14 @@ class StopWatch extends Component<StopWatchProps, StopWatchState> {
     });
   }
 
-  public stop() {
+  public stop(useTimout: boolean = true) {
     clearInterval(this.refreshIntervalId);
     this.setState({ endTime: Date.now() });
     if (this.props.clearOnStop) {
-      this.clearTimeoutIds.push(setTimeout(() => this.setState({ elapsed: 0 }), this.props.clearTimout || 3000));
+      if (useTimout)
+        this.clearTimeoutIds.push(setTimeout(() => this.setState({ elapsed: 0 }), this.props.clearTimout || 3000));
+      else
+        this.setState({ elapsed: 0 })
     }
   }
 
