@@ -9,17 +9,17 @@ export enum ExercisesActionTypes {
 };
 
 export interface AddExercisesAction extends Action {
-  type: ExercisesActionTypes.ADD_EXERCISES,
+  type: ExercisesActionTypes.ADD_EXERCISES;
   payload: {
-    exercises: Array<Exercise>,
-  },
+    exercises: Array<Exercise>;
+  };
 };
 
 export interface SetExercisesAction extends Action {
-  type: ExercisesActionTypes.SET_EXERCISES,
+  type: ExercisesActionTypes.SET_EXERCISES;
   payload: {
-    exercises: Array<Exercise>,
-  },
+    exercises: Array<Exercise>;
+  };
 };
 
 export type RefreshExercisesThunkAction = ThunkAction<Promise<void>, State, undefined, SetExercisesAction>;
@@ -31,22 +31,22 @@ export type GetExerciseConfigThunkAction = ThunkAction<Promise<ExerciseConfig>, 
 export type ExercisesAction = AddExercisesAction | SetExercisesAction;
 
 export interface ExercisePartial {
-  _id?: string,
-  name: string,
-  primaryMuscleGroups: Array<string>,
-  secondaryMuscleGroups: Array<string>,
+  _id?: string;
+  name: string;
+  primaryMuscleGroups: Array<string>;
+  secondaryMuscleGroups: Array<string>;
 }
 
 export interface Exercise {
-  _id: string,
-  name: string,
-  primaryMuscleGroups: Array<string>,
-  secondaryMuscleGroups: Array<string>,
+  _id: string;
+  name: string;
+  primaryMuscleGroups: Array<string>;
+  secondaryMuscleGroups: Array<string>;
 };
 
 export interface ExerciseConfig {
-  weight: number,
-  reps: number,
+  weight: number;
+  reps: number;
 };
 
 export type ExercisesState = Array<Exercise>;
