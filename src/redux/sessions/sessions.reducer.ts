@@ -61,6 +61,11 @@ export const sessionsReducer = (state: SessionsState = { sessions: [] }, action:
           ],
         },
       });
+    case SessionsActionTypes.CANCEL_SET:
+      return ({
+        ...state,
+        currentSet: undefined,
+      });
     default:
       return state;
   };
