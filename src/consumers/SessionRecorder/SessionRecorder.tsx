@@ -19,7 +19,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import { ActionType } from './../../redux/action.type';
 import { startSession, startSet, endSet, endAndSaveSession, refreshSessions, cancelSet } from './../../redux/sessions';
 import { State } from './../../redux/state.types';
-import { Exercise, refreshExercises, addExercise, ExercisePartial } from './../../redux/exercises';
+import { Exercise, refreshExercises, addExercise, ExercisePartial, getExerciseConfig } from './../../redux/exercises';
 
 class SessionRecorder extends Component<SessionRecorderProps, SessionRecorderState> {
   constructor(props: SessionRecorderProps) {
@@ -66,6 +66,7 @@ class SessionRecorder extends Component<SessionRecorderProps, SessionRecorderSta
     this.updateNewExercise = this.updateNewExercise.bind(this);
     this.cancelNewExercise = this.cancelNewExercise.bind(this);
     this.addNewExercise = this.addNewExercise.bind(this);
+    this.getExerciseConfig = this.getExerciseConfig.bind(this);
     this.cancelSet = this.cancelSet.bind(this);
     this.addSet = this.addSet.bind(this);
     this.startSet = this.startSet.bind(this);
@@ -79,7 +80,7 @@ class SessionRecorder extends Component<SessionRecorderProps, SessionRecorderSta
     this.props.refreshSessions();
   }
   
-  handleBackgroundClick() {
+  async handleBackgroundClick() {
     switch(this.props.location.pathname) {
       case '/':
         return this.props.navigateTo('/musclegroups');
@@ -107,7 +108,7 @@ class SessionRecorder extends Component<SessionRecorderProps, SessionRecorderSta
     }
   }
 
-  handleOptionsListItemClick(option: SessionRecorderOptionsListOption) { 
+  async handleOptionsListItemClick(option: SessionRecorderOptionsListOption) { 
     switch(this.props.location.pathname) {
       case '/musclegroups':
         return this.setState(state => ({
@@ -117,8 +118,11 @@ class SessionRecorder extends Component<SessionRecorderProps, SessionRecorderSta
           })),
         }));
       case '/exercise':
-        option.extra && this.setState({ exercise: option.extra });
-        return this.props.navigateTo('/sets');
+        if (option.extra) {
+          const exerciseConfig = await this.getExerciseConfig(option.extra);
+          this.setState({ exercise: option.extra, ...exerciseConfig })
+          return this.props.navigateTo('/sets');
+        }
       case '/exercise/add':
         return this.setState(state => ({
           newExerciseMuscleGroupOptions: state.newExerciseMuscleGroupOptions.map(mgo => ({
@@ -142,6 +146,20 @@ class SessionRecorder extends Component<SessionRecorderProps, SessionRecorderSta
   }
   decreaseWeight() {
     this.setState(state => ({ weight: state.weight - this.state.weightUnit }));
+  }
+
+  increaseRepsUnit() {
+    this.setState(state => ({ repsUnit: state.repsUnit + 1 }));
+  }
+  decreaseRepsUnit() {
+    this.setState(state => ({ repsUnit: state.repsUnit - 1 }));
+  }
+
+  increaseWeightUnit() {
+    this.setState(state => ({ weightUnit: state.weightUnit + 1 }));
+  }
+  decreaseWeightUnit() {
+    this.setState(state => ({ weightUnit: state.weightUnit - 1 }));
   }
 
   renderSetPrefix(index: number) {
@@ -174,6 +192,10 @@ class SessionRecorder extends Component<SessionRecorderProps, SessionRecorderSta
         name: this.state.newExercise,
         primaryMuscleGroups: this.state.newExerciseMuscleGroupOptions.filter(mgo => mgo.selected).map(mgo => mgo.value),
         secondaryMuscleGroups: this.state.newExerciseMuscleGroupOptions.filter(mgo => mgo.highlighted).map(mgo => mgo.value),
+        defaultWeight: this.state.weight,
+        defaultWeightUnit: this.state.weightUnit,
+        defaultReps: this.state.reps,
+        defaultRepsUnit: this.state.reps,
       });
       this.setState(state => ({ newExerciseOptions: [
         ...state.newExerciseOptions,
@@ -187,6 +209,10 @@ class SessionRecorder extends Component<SessionRecorderProps, SessionRecorderSta
     this.props.navigateTo('/exercise');
   }
 
+  async getExerciseConfig(exercise: Exercise) {
+    return await this.props.getExerciseConfig(exercise, this.state.setSummaries.length);
+  }
+  
   cancelSet() {
     this.props.cancelSet();
     if (this.setsStopWatchRef.current) {
@@ -208,7 +234,12 @@ class SessionRecorder extends Component<SessionRecorderProps, SessionRecorderSta
       setSummaries: [ ...state.setSummaries,
         `${this.state.reps} reps at ${this.state.weight}lbs`
       ],
-    }));
+    }), async () => {
+      if (this.state.exercise) {
+        const exerciseConfig = await this.getExerciseConfig(this.state.exercise);
+        this.setState(exerciseConfig);
+      }
+    });
   }
 
   addSet() {
@@ -232,6 +263,50 @@ class SessionRecorder extends Component<SessionRecorderProps, SessionRecorderSta
                   <Typography dim={true} small>(double-click for secondary)</Typography>
                 </div>
                 <OptionsList options={this.state.newExerciseMuscleGroupOptions} handleClick={this.handleOptionsListItemClick}/>
+                <div className="SessionRecorder-number-input">
+                  <Typography dim small>default reps</Typography>
+                  <div className="SessionRecorder-number-input-control">
+                    <HorizontalControl
+                      start={{ icon: 'minus', handleClick: this.decreaseReps }}
+                      end={{ icon: 'add', handleClick: this.increaseReps }}
+                    >
+                      { this.state.reps }
+                    </HorizontalControl>
+                  </div>
+                </div>
+                <div className="SessionRecorder-number-input">
+                  <Typography dim small>default weight</Typography>
+                  <div className="SessionRecorder-number-input-control">
+                    <HorizontalControl
+                      start={{ icon: 'minus', handleClick: this.decreaseWeight }}
+                      end={{ icon: 'add', handleClick: this.increaseWeight }}
+                    >
+                      { this.state.weight }
+                    </HorizontalControl>
+                  </div>
+                </div>
+                <div className="SessionRecorder-number-input">
+                  <Typography dim small>default reps step</Typography>
+                  <div className="SessionRecorder-number-input-control">
+                    <HorizontalControl
+                      start={{ icon: 'minus', handleClick: this.decreaseRepsUnit }}
+                      end={{ icon: 'add', handleClick: this.increaseRepsUnit }}
+                    >
+                      { this.state.repsUnit }
+                    </HorizontalControl>
+                  </div>
+                </div>
+                <div className="SessionRecorder-number-input">
+                  <Typography dim small>default weight step</Typography>
+                  <div className="SessionRecorder-number-input-control">
+                    <HorizontalControl
+                      start={{ icon: 'minus', handleClick: this.decreaseWeightUnit }}
+                      end={{ icon: 'add', handleClick: this.increaseWeightUnit }}
+                    >
+                      { this.state.weightUnit }
+                    </HorizontalControl>
+                  </div>
+                </div>
                 <div className="SessionRecorder-button-list">
                   { this.state.newExercise &&
                   <IconButton icon="done" outline="dashed" handleClick={this.addNewExercise} />
@@ -357,6 +432,7 @@ const mapDispathToProps = (dispatch: ThunkDispatch<State, undefined, ActionType>
   refreshExercises: () => dispatch(refreshExercises()),
   refreshSessions: () => dispatch(refreshSessions()),
   addExercise: (exercise: ExercisePartial) => dispatch(addExercise(exercise)),
+  getExerciseConfig: (exercise: Exercise, setPosition) => dispatch(getExerciseConfig(exercise, setPosition)),
   cancelSet: () => dispatch(cancelSet()),
 });
 

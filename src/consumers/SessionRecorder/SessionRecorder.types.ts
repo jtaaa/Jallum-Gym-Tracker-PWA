@@ -3,7 +3,7 @@ import { CallHistoryMethodAction } from 'connected-react-router';
 
 import { StartSessionAction, StartSetAction, EndSetAction, CancelSetAction } from './../../redux/sessions';
 import { OptionsListOption } from './../../components/OptionsList/OptionsList.types';
-import { Exercise, ExercisePartial } from '../../redux/exercises';
+import { Exercise, ExercisePartial, ExerciseConfig } from '../../redux/exercises';
 
 export interface SessionRecorderReduxDispatchProps {
   navigateTo: (route: string) => CallHistoryMethodAction;
@@ -14,6 +14,7 @@ export interface SessionRecorderReduxDispatchProps {
   refreshExercises: () => Promise<void>;
   refreshSessions: () => Promise<void>;
   addExercise: (exercise: ExercisePartial) => Promise<Exercise>;
+  getExerciseConfig: (exercise: Exercise, setPosition: number) => Promise<ExerciseConfig>,
   cancelSet: () => CancelSetAction;
 };
 
