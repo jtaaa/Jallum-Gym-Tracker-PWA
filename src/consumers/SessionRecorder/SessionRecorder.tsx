@@ -17,7 +17,7 @@ import TextInput from './../../components/TextInput/TextInput';
 import { ThunkDispatch } from 'redux-thunk';
 
 import { ActionType } from './../../redux/action.type';
-import { startSession, startSet, endSet, endAndSaveSession, refreshSessions } from './../../redux/sessions';
+import { startSession, startSet, endSet, endAndSaveSession, refreshSessions, cancelSet } from './../../redux/sessions';
 import { State } from './../../redux/state.types';
 import { Exercise, refreshExercises, addExercise, ExercisePartial, getExerciseConfig } from './../../redux/exercises';
 
@@ -67,6 +67,10 @@ class SessionRecorder extends Component<SessionRecorderProps, SessionRecorderSta
     this.cancelNewExercise = this.cancelNewExercise.bind(this);
     this.addNewExercise = this.addNewExercise.bind(this);
     this.getExerciseConfig = this.getExerciseConfig.bind(this);
+    this.cancelSet = this.cancelSet.bind(this);
+    this.addSet = this.addSet.bind(this);
+    this.startSet = this.startSet.bind(this);
+    this.endSet = this.endSet.bind(this);
   }
 
   private setsStopWatchRef = React.createRef<StopWatch>();
@@ -94,25 +98,10 @@ class SessionRecorder extends Component<SessionRecorderProps, SessionRecorderSta
           if (node) {
             if (!this.state.inSet) {
               node.start();
-              if (this.state.exercise)
-                this.props.startSet(this.state.exercise._id);
-              this.setState({ inSet: true });
+              this.startSet();
             } else {
               node.stop();
-              if (this.state.exercise) {
-                this.props.endSet(this.state.reps, this.state.weight);
-                this.setState(state => ({
-                  inSet: false,
-                  setSummaries: [ ...state.setSummaries,
-                    `${this.state.reps} reps at ${this.state.weight}lbs`
-                  ],
-                }), async () => {
-                  if (this.state.exercise) {
-                    const exerciseConfig = await this.getExerciseConfig(this.state.exercise);
-                    this.setState(exerciseConfig);
-                  }
-                });
-              }
+              this.endSet();
             }
           }
         }
@@ -223,6 +212,40 @@ class SessionRecorder extends Component<SessionRecorderProps, SessionRecorderSta
   async getExerciseConfig(exercise: Exercise) {
     return await this.props.getExerciseConfig(exercise, this.state.setSummaries.length);
   }
+  
+  cancelSet() {
+    this.props.cancelSet();
+    if (this.setsStopWatchRef.current) {
+      this.setsStopWatchRef.current.stop(false);
+      this.setState({ inSet: false });
+    }
+  }
+
+  startSet() {
+    if (this.state.exercise)
+      this.props.startSet(this.state.exercise._id);
+    this.setState({ inSet: true });
+  }
+
+  endSet() {
+    this.props.endSet(this.state.reps, this.state.weight);
+    this.setState(state => ({
+      inSet: false,
+      setSummaries: [ ...state.setSummaries,
+        `${this.state.reps} reps at ${this.state.weight}lbs`
+      ],
+    }), async () => {
+      if (this.state.exercise) {
+        const exerciseConfig = await this.getExerciseConfig(this.state.exercise);
+        this.setState(exerciseConfig);
+      }
+    });
+  }
+
+  addSet() {
+    this.startSet();
+    this.endSet();
+  }
 
   render() {
     return (
@@ -299,9 +322,14 @@ class SessionRecorder extends Component<SessionRecorderProps, SessionRecorderSta
                     { this.state.exercise ? this.state.exercise.name : 'Go pick an exercise!' }
                   </Typography>
                 </div>
-                { !this.state.inSet ?
-                  <IconButton icon="start" />
-                : <IconButton icon="done" /> }
+                <div className="SessionRecorder-button-list">
+                  { !this.state.inSet ?
+                    <IconButton icon="start" />
+                  : <IconButton icon="done" /> }
+                  { this.state.inSet ?
+                    <IconButton icon="cancel" outline="dashed" handleClick={this.cancelSet} />
+                  : <IconButton icon="add" outline="dashed" handleClick={this.addSet} /> }
+                </div>
                 <div className="SessionRecorder-sets-stopwatch">
                   <StopWatch ref={this.setsStopWatchRef} clearOnStop />
                 </div>
@@ -404,7 +432,8 @@ const mapDispathToProps = (dispatch: ThunkDispatch<State, undefined, ActionType>
   refreshExercises: () => dispatch(refreshExercises()),
   refreshSessions: () => dispatch(refreshSessions()),
   addExercise: (exercise: ExercisePartial) => dispatch(addExercise(exercise)),
-  getExerciseConfig: (exercise: Exercise, setPosition) => dispatch(getExerciseConfig(exercise, setPosition))
+  getExerciseConfig: (exercise: Exercise, setPosition) => dispatch(getExerciseConfig(exercise, setPosition)),
+  cancelSet: () => dispatch(cancelSet()),
 });
 
 export default connect(

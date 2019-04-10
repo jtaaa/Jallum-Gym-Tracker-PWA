@@ -1,20 +1,21 @@
 import { Location } from 'history';
 import { CallHistoryMethodAction } from 'connected-react-router';
 
-import { StartSessionAction, StartSetAction, EndSetAction } from './../../redux/sessions';
+import { StartSessionAction, StartSetAction, EndSetAction, CancelSetAction } from './../../redux/sessions';
 import { OptionsListOption } from './../../components/OptionsList/OptionsList.types';
 import { Exercise, ExercisePartial, ExerciseConfig } from '../../redux/exercises';
 
 export interface SessionRecorderReduxDispatchProps {
-  navigateTo: (route: string) => CallHistoryMethodAction,
-  startSession: (muscleGroups: Array<string>) => StartSessionAction,
-  endSession: () => Promise<void>,
-  startSet: (exercise: string) => StartSetAction,
-  endSet: (reps: number, weight: number) => EndSetAction,
-  refreshExercises: () => Promise<void>,
-  refreshSessions: () => Promise<void>,
-  addExercise: (exercise: ExercisePartial) => Promise<Exercise>,
+  navigateTo: (route: string) => CallHistoryMethodAction;
+  startSession: (muscleGroups: Array<string>) => StartSessionAction;
+  endSession: () => Promise<void>;
+  startSet: (exercise: string) => StartSetAction;
+  endSet: (reps: number, weight: number) => EndSetAction;
+  refreshExercises: () => Promise<void>;
+  refreshSessions: () => Promise<void>;
+  addExercise: (exercise: ExercisePartial) => Promise<Exercise>;
   getExerciseConfig: (exercise: Exercise, setPosition: number) => Promise<ExerciseConfig>,
+  cancelSet: () => CancelSetAction;
 };
 
 export interface SessionRecorderReduxStateProps {
